@@ -1,0 +1,135 @@
+<mat-toolbar color="primary">
+  <span class="fill-remaining-space">Messaging application: Websocket + Angular + Node + MongoDB </span>
+  <nav class="nav nav-pills">
+    <!-- <a class="nav-link" routerLink="users" routerLinkActive="active" *ngIf="auth.loggedIn">Users</a> -->
+    <!-- <a class="nav-link" (click)="logout()" href="#" *ngIf="auth.loggedIn">Logout</a> -->
+    <mat-icon *ngIf="authService.loggedIn" (click)="logout()" style="cursor:pointer" aria-hidden="false" aria-label="Example home icon"
+      matSuffix>logout</mat-icon>
+  </nav>
+</mat-toolbar>
+
+<div fxLayout="row " fxLayout.lt-sm="column" fxLayoutGap="128px" *ngIf="!authService.loggedIn">
+  <form [formGroup]="signUp"  (ngSubmit)="onRegister(signUp.value)">
+    <!-- <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="16px"> -->
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Email" formControlName="email">
+        <mat-error *ngIf="!signUp.controls['email'].valid && signUp.controls['email'].touched">
+          {{ getErrorEmail() }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Name" formControlName="name">
+        <mat-error *ngIf="!name.valid && name.touched">
+          {{ titleAlert }}
+        </mat-error>
+      </mat-form-field>
+    <!-- </div> -->
+    <div class="break"></div> <!-- break -->
+    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="16px">
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Password" formControlName="password">
+        <mat-hint>Choose a password of at least eight characters, one uppercase letter and one number</mat-hint>
+        <mat-error *ngIf="!signUp.controls['password'].valid && signUp.controls['password'].touched">
+          {{ getErrorPassword() }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Description"  formControlName="description" />
+        <mat-error *ngIf="!signUp.controls['description'].valid && signUp.controls['description'].touched">
+          Required field, must be between 5 and 10 characters.
+        </mat-error>
+      </mat-form-field>
+    </div>
+    
+    <div class="form-element">
+      <button mat-raised-button color="primary" type="submit"
+       class="button" [disabled]="!signUp.valid">Sign up</button>
+    </div>
+  </form>
+
+  <form [formGroup]="loginn" (ngSubmit)="onLogin(loginn.value)" class="form">
+    <mat-form-field class="form-element">
+      <input matInput placeholder="Email" formControlName="email">
+      <mat-error *ngIf="!loginn.controls['email'].valid && loginn.controls['email'].touched">
+        {{ getErrorEmailLogin() }}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-element">
+      <input matInput placeholder="Password" formControlName="password">
+      <mat-hint>Enter your password</mat-hint>
+      <mat-error *ngIf="!loginn.controls['password'].valid && loginn.controls['password'].touched">
+        {{ getErrorPassword() }}
+      </mat-error>
+    </mat-form-field>
+    <div class="form-element">
+      <button mat-raised-button color="accent" type="submit" class="button" [disabled]="!loginn.valid">Login</button>
+    </div>
+  </form>
+</div>
+
+
+<!-- <div fxLayout="row">
+  <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100" fxLayoutGap="200px">
+    <div class="container" *ngIf="!post; else forminfo" novalidate fxFlexAlign="end"> -->
+<!-- <form [formGroup]="signUp" (ngSubmit)="onRegister(signUp.value)" class="form">
+        <mat-form-field class="form-element">
+          <input matInput placeholder="Email" formControlName="email">
+          <mat-error *ngIf="!signUp.controls['email'].valid && signUp.controls['email'].touched">
+            {{ getErrorEmail() }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-element">
+          <input matInput placeholder="Name" formControlName="name">
+          <mat-error *ngIf="!name.valid && name.touched">
+            {{ titleAlert }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-element">
+          <textarea matInput placeholder="Description" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" formControlName="description"></textarea>
+          <mat-error *ngIf="!signUp.controls['description'].valid && signUp.controls['description'].touched">
+            Required field, must be between 5 and 10 characters.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="form-element">
+          <input matInput placeholder="Password" formControlName="password">
+          <mat-hint>Choose a password of at least eight characters, one uppercase letter and one number</mat-hint>
+          <mat-error *ngIf="!signUp.controls['password'].valid && signUp.controls['password'].touched">
+            {{ getErrorPassword() }}
+          </mat-error>
+        </mat-form-field>
+        <div class="form-element">
+          <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!signUp.valid">Sign up</button>
+        </div>
+      </form> -->
+<!-- </div> -->
+
+<!-- <form [formGroup]="loginn" (ngSubmit)="onLogin(loginn.value)" class="form">
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Email" formControlName="email">
+        <mat-error *ngIf="!loginn.controls['email'].valid && loginn.controls['email'].touched">
+          {{ getErrorEmailLogin() }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-element">
+        <input matInput placeholder="Password" formControlName="password">
+        <mat-hint>Enter your password</mat-hint>
+        <mat-error *ngIf="!loginn.controls['password'].valid && loginn.controls['password'].touched">
+          {{ getErrorPassword() }}
+        </mat-error>
+      </mat-form-field>
+      <div class="form-element">
+        <button mat-raised-button color="accent" type="submit" class="button" [disabled]="!loginn.valid">Login</button>
+      </div>
+    </form> -->
+<!-- </div>
+</div> -->
+
+<!-- <ng-template #forminfo>
+  <div class="container">
+    {{ post | json }}
+  </div>
+</ng-template> -->

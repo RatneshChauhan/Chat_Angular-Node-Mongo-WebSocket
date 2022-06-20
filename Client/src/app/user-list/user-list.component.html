@@ -1,0 +1,16 @@
+<div class="card-body contacts_body">
+    <ul ngClass="contacts">
+        <li [ngClass]="selectedUser.selected? 'active':''" *ngFor="let user of searchedUsers() | search:'status,name':searchTxt" (click)="userClickHandler(user)">
+            <div class="d-flex bd-highlight">
+                <div class="img_cont">
+                    <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
+                    <span [ngClass]="user.status==='online' || user.status==='typing'?'online_icon':'online_icon offline'"></span>
+                </div>
+                <div class="user_info">
+                    <span>{{user.name}}</span>
+                    <p>{{user.name}} is {{user.status}}</p>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
