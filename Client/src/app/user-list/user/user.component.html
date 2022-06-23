@@ -1,0 +1,15 @@
+<mat-card class="user" [ngClass]="user.selected? 'selected': ''" (click)="userClickHandler()">
+
+  <div fxLayout="row" fxLayoutAlign="space-between end">
+    <div class="sub-section-1" id="{{user.email}}">{{user.name}}
+      <span [ngClass]="user.status==='ONLINE' ? 'green' : 'red'" id="{{user.email}}_{{user._id}}"></span>
+    </div>
+    <div id="{{user._id}}_count"> </div>
+  </div>
+
+  <div fxLayout="row" class="user-last-message" id="{{user._id}}">
+    {{user.email}}
+  </div>
+  <br/>
+
+</mat-card>

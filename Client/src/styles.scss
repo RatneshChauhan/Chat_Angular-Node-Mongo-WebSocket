@@ -1,0 +1,247 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+
+:root {
+  --theme-background-color:#075643;
+  --theme-bgcolor-primary: #44af96;
+  --theme-border-color: #a5f0b9;
+  --theme-icon-color: white;
+  --theme-header-color: rgb(11, 83, 83);
+  --theme-search-color: white;
+  --theme-header-footer-btn-color: #74e1c7;
+  --theme-active-color:#49f419;
+  --theme-text-color: black;
+   --font-weight: 300
+}
+
+body,
+html {
+  height: 100%;
+  margin: 0;
+  background: -webkit-linear-gradient(to right, var(--theme-background-color), 
+  var(--theme-background-color), var(--theme-background-color));
+  background: linear-gradient(to right, var(--theme-background-color), var(--theme-background-color), 
+  var(--theme-background-color));
+}
+
+.chat {
+  margin-top: 10px;
+  margin-bottom: auto;
+}
+
+.card {
+  height: 500px;
+  border-radius: 15px !important;
+  background-color: var(--theme-bgcolor-primary) !important;
+}
+
+.contacts_body {
+  padding: 0.75rem 0 !important;
+  overflow-y: auto;
+  white-space: nowrap;
+}
+
+.msg_card_body {
+  overflow-y: auto;
+}
+
+.container {
+  align-content: center;
+}
+
+.type_msg {
+  background-color:#c8eded !important;
+  border: 0 !important;
+  color: var(--theme-text-color) !important;
+  height: 60px !important;
+  overflow-y: auto;
+}
+
+.type_msg:focus {
+  box-shadow: none !important;
+  outline: 0px !important;
+}
+
+.send_btn{
+  border-radius: 0 15px 15px 0 !important;
+  background-color: var(--theme-header-footer-btn-color) !important;
+    border:0 !important;
+    color: white !important;
+    cursor: pointer;
+  }
+
+.attach_btn{
+    border-radius: 15px 0 0 15px !important;
+    background-color: var(--theme-header-footer-btn-color) !important;
+      border:0 !important;
+      color: white !important;
+      cursor: pointer;
+    }
+
+.search {
+  border-radius: 15px 0 0 15px !important;
+  background-color: var(--theme-search-color) !important;
+  border: 0 !important;
+  color: var(--theme-text-color) !important;
+}
+
+.search:focus {
+  box-shadow: none !important;
+  outline: 0px !important;
+}
+
+.search_btn {
+  border-radius: 0 15px 15px 0 !important;
+  background-color: var(--theme-header-footer-btn-color) !important;
+  border: 0 !important;
+  color: var(--theme-text-color) !important;
+  cursor: pointer;
+}
+
+.contacts li {
+  width: 100% !important;
+  padding: 5px 10px;
+  margin-bottom: 15px !important;
+  border-bottom: 1px solid var(--theme-border-color);
+}
+
+.user_img {
+  height: 70px;
+  width: 70px;
+  border: 1.5px solid #f5f6fa;
+
+}
+
+.img_cont {
+  position: relative;
+  height: 70px;
+  width: 70px;
+}
+
+.online_icon {
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  background-color: #4cd137;
+  border-radius: 50%;
+  bottom: 0.2em;
+  right: 0.4em;
+  border: 1.5px solid white;
+}
+
+.offline {
+  background-color: #c23616 !important;
+}
+
+.user_info {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 15px;
+}
+
+.user_info span {
+  font-size: 20px;
+  color: var(--theme-text-color);
+}
+
+.user_info p {
+  font-size: 10px;
+  color: var(--theme-text-color);
+}
+
+.video_cam {
+  margin-left: 50px;
+  margin-top: 5px;
+}
+
+.video_cam span {
+  color: var(--theme-icon-color);
+  font-size: 20px;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.msg_head {
+  position: relative;
+}
+
+#action_menu_btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: var(--theme-icon-color);
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.active{
+  background-color: var(--theme-active-color);
+} 
+
+.action_menu {
+  z-index: 1;
+  position: absolute;
+  padding: 15px 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border-radius: 15px;
+  top: 30px;
+  right: 15px;
+  display: none;
+}
+
+.action_menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.action_menu ul li {
+  width: 100%;
+  padding: 10px 15px;
+  margin-bottom: 5px;
+}
+
+.action_menu ul li i {
+  padding-right: 10px;
+
+}
+
+.action_menu ul li:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+@media(max-width: 576px) {
+  .contacts_card {
+    margin-bottom: 15px !important;
+  }
+}
+
+.card-header{
+  border-radius: 15px 15px 0 0 !important;
+  border-bottom: 0 !important;
+  background-color: var(--theme-header-color);
+}
+
+
+
+
+// .msgCount {
+//     flex: 1;
+//     font-size: 14px;
+//     opacity: 0.7;
+//     min-width: 65px;
+//     font-family: monospace;
+//     align-self: flex-end;
+//     background: darkgreen;
+//     border-radius: 50%;
+//     text-align: center;
+//     color: white;
+//     border: 2px solid lightseagreen;
+//     width: 36px;
+//     height: 36px;
+//     padding: 3px;
+// }

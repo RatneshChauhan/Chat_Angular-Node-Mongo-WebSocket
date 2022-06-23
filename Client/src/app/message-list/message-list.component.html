@@ -1,0 +1,27 @@
+<div *ngFor="let message of chat">
+    <div [ngSwitch]="message.type">
+        <div *ngSwitchCase="'other'" ngClass="d-flex justify-content-end mb-4">
+            <div ngClass="msg_cotainer_send">
+                {{message.text}}
+                <span ngClass="msg_time_send">
+                    {{message.ts| date : 'HH:mm:ss'}}
+                </span>
+            </div>
+            <div ngClass="img_cont_msg">
+                <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
+            </div>
+        </div>
+        <div *ngSwitchCase="'own'" ngClass="d-flex justify-content-start mb-4">
+            <div ngClass="img_cont_msg">
+                <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
+            </div>
+            <div ngClass="msg_cotainer">
+                {{message.text}}
+                <span ngClass="msg_time">
+                    {{message.ts| date : 'HH:mm:ss'}}
+                </span>
+            </div>
+        </div>
+        <!-- <div *ngSwitchDefault>Otherwise</div> -->
+    </div>
+</div>
