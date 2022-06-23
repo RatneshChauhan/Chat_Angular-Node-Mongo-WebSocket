@@ -46,9 +46,14 @@ export class MessageListComponent implements OnInit {
   ngOnInit() {
     this.getCurrentUser()
     this.getOldMessages()
+    this.sentMessageHandler()
   }
 
-
+  sentMessageHandler() {
+    this.messageService.messageSentSubscription.subscribe((MessageDetail: any) => {
+      this.updateChatWindow(MessageDetail)
+    })
+  }
   getCurrentUser() {
     const loggedInUser = this.wsService.getLoggedInUser()
 

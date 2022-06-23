@@ -23,6 +23,7 @@ export class LoginComponent {
   titleAlert: string = 'This field is required';
   post: any = '';
   userModel: User;
+  styles: any
 
   constructor(public authService: AuthService, private wsService: WebsocketService,
     private register: SignupService, private router: Router, private formBuilder: FormBuilder) {
@@ -44,6 +45,29 @@ export class LoginComponent {
   ngOnInit() {
     this.createForm();
     this.setChangeValidate()
+  }
+
+  theme(themeBackgroundColor: string, primaryBGColor: string, 
+    borderColorSecondary: string, iconColorSecondary: string,
+    headerColor: string, searchInputColor: string,
+    btnColor: string, textColor: string, activeColor: string) {
+
+    this.styles = [
+      { name: 'theme-bgcolor-primary', value: primaryBGColor },
+      { name: 'theme-border-color', value: borderColorSecondary },
+      { name: 'theme-icon-color', value: iconColorSecondary },
+      { name: 'theme-header-color', value: headerColor },
+      { name: 'theme-search-color', value: searchInputColor },
+      { name: 'theme-header-footer-btn-color', value: btnColor },
+      { name: 'theme-active-color', value: activeColor },
+      { name: 'theme-text-color', value: textColor },
+      { name: 'theme-background-color', value: themeBackgroundColor },
+
+    ];
+
+    this.styles.forEach((data: any) => {
+      document.documentElement.style.setProperty(`--${data.name}`, data.value);
+    });
 
   }
 
@@ -128,8 +152,8 @@ export class LoginComponent {
     this.register.signup(this.userModel)
       .pipe(first())
       .subscribe(
-      result => this.router.navigate(['login']),
-      err => this.error = 'Could not sign up'
+        result => this.router.navigate(['login']),
+        err => this.error = 'Could not sign up'
       )
   }
 
@@ -142,8 +166,8 @@ export class LoginComponent {
     this.authService.login(this.loginn.get('email').value, this.loginn.get('password').value)
       .pipe(first())
       .subscribe(
-      result => this.wsService.join(),
-      err => this.error = 'Could not authenticate'
+        result => this.wsService.join(),
+        err => this.error = 'Could not authenticate'
       )
   }
 

@@ -10,8 +10,9 @@ import { Subject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MessageService {
-  privateMessageRecievedSubscription = new Subject();
+  privateMessageRecievedSubscription = new Subject<Message>();
   constructor(private http: HttpClient) { }
+  messageSentSubscription = new Subject();
 
   private async request(method: string, url: string, data?: any, responseType?: any) {
     // const token = await this.oktaAuth.getAccessToken();

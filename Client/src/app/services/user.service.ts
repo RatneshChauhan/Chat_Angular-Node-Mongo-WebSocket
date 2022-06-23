@@ -21,16 +21,13 @@ export interface UserDetail {
 export class UserService {
 
   userClickSubscription = new Subject<UserDetail>();
-  
   userSearchSubscription = new Subject();
-  disableEditingSubscription = new Subject();
 
-    constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
 
   private async request(method: string, url: string, data?: any, responseType?: any) {
-   // const token = await this.oktaAuth.getAccessToken();
-   const token = localStorage.getItem('access_token')
+    // const token = await this.oktaAuth.getAccessToken();
+    const token = localStorage.getItem('access_token')
 
     console.log('request ' + JSON.stringify(data));
     const result = this.http.request(method, url, {
@@ -50,8 +47,8 @@ export class UserService {
     // get
     return this.request('get', `/api/users`);
   }
- 
-  searchHandler(value:any) {
+
+  searchHandler(value: any) {
     this.userSearchSubscription.next({ value });
   }
 

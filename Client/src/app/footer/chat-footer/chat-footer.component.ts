@@ -100,18 +100,20 @@ export class ChatFooterComponent implements OnInit {
     const from: any = { senderUserId: this.fromUserId, senderUserName: this.fromUser, senderEmail: this.fromUserEmail }
     const to: any = { recieverUserId: this.selectedUserId, recieverUserName: this.selectedUser, recieverEmail: this.selectedEmail }
 
-    const message = {
-      ...new Message(),
-      ...{
+    const message:Message = {
+      
         to: to,
         from: from,
         text: messageText,
-        ts: Math.floor(Date.now() / 1000)
-      }
+        ts: Math.floor(Date.now() / 1000),
+        type:'own'
+      
     };
+
 
     this.wsService.sendPrivateMessage(message)
     this.messageService.saveMessage(message)
+    this.messageService.messageSentSubscription.next(message)
   }
 
 }

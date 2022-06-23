@@ -16,7 +16,7 @@ export class UserListComponent implements OnInit {
 
   userList: User[];
   filteredUsers: User[];
-  selectedUser: User;
+  // selectedUser: User;
   loading = false;
   searchedText = '';
   searchTxt: string
@@ -24,7 +24,7 @@ export class UserListComponent implements OnInit {
   messages: Message[] = []
   count: number = 0;
   loggedInUser: any
-  isSelected:boolean = false
+  
 
 
 
@@ -158,11 +158,11 @@ export class UserListComponent implements OnInit {
     this.userList[index].selected = true;
   }
 
-  getSelectedUserIndex() {
-    const index = this.userList.findIndex((user: any) => user.selected === true);
-    // this.selectedUser = this.userList[index];
-    return index;
-  }
+  // getSelectedUserIndex() {
+  //   const index = this.userList.findIndex((user: any) => user.selected === true);
+  //    this.selectedUser = this.userList[index];
+  //   return index;
+  // }
 
   removeSelection() {
     this.userList.forEach((user: any) => user.selected = false);

@@ -35,7 +35,7 @@ export class AppComponent {
       console.log('scrolling err: ', err)
      }
   }
-   /**Add the method**/
+   
    onScroll(){
     this.scrolledToBottom = true;
   }

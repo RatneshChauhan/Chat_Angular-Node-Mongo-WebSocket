@@ -1,29 +1,59 @@
 <mat-toolbar color="primary">
   <span class="fill-remaining-space">Messaging application: Websocket + Angular + Node + MongoDB </span>
+  <span >
+    <button mat-icon-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger"
+      (mouseover)="menuTrigger.openMenu()">
+      <mat-icon>palette</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" [overlapTrigger]="false">
+      <span (mouseleave)="menuTrigger.closeMenu()">
+        <button mat-menu-item (click)="theme('black','white','lightskyblue','lightskyblue',
+        'azure','white', 'lightskyblue', 'black', '#6280b2')">
+          <span>Theme-</span>
+          <span>Light</span>
+        </button>
+        <button mat-menu-item (click)="theme('white','black','lightskyblue','white',
+        '#151313','white', '#1a2d4c', 'white', '#414244')">
+          <span>Theme-</span>
+          <span>Dark</span>
+        </button>
+        <button mat-menu-item (click)="theme('black','red','pink','white',
+        'hotpink','white', 'pink', 'white', '#7e0b0b')">
+          <span>Theme-</span>
+          <span>Red</span>
+        </button>
+        <button mat-menu-item (click)="theme('black','blue','pink','white',
+        '#3f51b5','white', 'lightblue', 'white', '#0b3f95')">
+          <span>Theme-</span>
+          <span>Blue</span>
+        </button>
+      </span>
+    </mat-menu>
+  </span>
   <nav class="nav nav-pills">
     <!-- <a class="nav-link" routerLink="users" routerLinkActive="active" *ngIf="auth.loggedIn">Users</a> -->
     <!-- <a class="nav-link" (click)="logout()" href="#" *ngIf="auth.loggedIn">Logout</a> -->
-    <mat-icon *ngIf="authService.loggedIn" (click)="logout()" style="cursor:pointer" aria-hidden="false" aria-label="Example home icon"
-      matSuffix>logout</mat-icon>
+    <mat-icon *ngIf="authService.loggedIn" (click)="logout()" style="cursor:pointer" aria-hidden="false"
+      aria-label="Example home icon" matSuffix>logout</mat-icon>
   </nav>
 </mat-toolbar>
 
 <div fxLayout="row " fxLayout.lt-sm="column" fxLayoutGap="128px" *ngIf="!authService.loggedIn">
-  <form [formGroup]="signUp"  (ngSubmit)="onRegister(signUp.value)">
+  <form [formGroup]="signUp" (ngSubmit)="onRegister(signUp.value)">
     <!-- <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="16px"> -->
-      <mat-form-field class="form-element">
-        <input matInput placeholder="Email" formControlName="email">
-        <mat-error *ngIf="!signUp.controls['email'].valid && signUp.controls['email'].touched">
-          {{ getErrorEmail() }}
-        </mat-error>
-      </mat-form-field>
+    <mat-form-field class="form-element">
+      <input matInput placeholder="Email" formControlName="email">
+      <mat-error *ngIf="!signUp.controls['email'].valid && signUp.controls['email'].touched">
+        {{ getErrorEmail() }}
+      </mat-error>
+    </mat-form-field>
 
-      <mat-form-field class="form-element">
-        <input matInput placeholder="Name" formControlName="name">
-        <mat-error *ngIf="!name.valid && name.touched">
-          {{ titleAlert }}
-        </mat-error>
-      </mat-form-field>
+    <mat-form-field class="form-element">
+      <input matInput placeholder="Name" formControlName="name">
+      <mat-error *ngIf="!name.valid && name.touched">
+        {{ titleAlert }}
+      </mat-error>
+    </mat-form-field>
     <!-- </div> -->
     <div class="break"></div> <!-- break -->
     <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="16px">
@@ -35,16 +65,15 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field class="form-element">
-        <input matInput placeholder="Description"  formControlName="description" />
+        <input matInput placeholder="Description" formControlName="description" />
         <mat-error *ngIf="!signUp.controls['description'].valid && signUp.controls['description'].touched">
           Required field, must be between 5 and 10 characters.
         </mat-error>
       </mat-form-field>
     </div>
-    
+
     <div class="form-element">
-      <button mat-raised-button color="primary" type="submit"
-       class="button" [disabled]="!signUp.valid">Sign up</button>
+      <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!signUp.valid">Sign up</button>
     </div>
   </form>
 
