@@ -43,13 +43,9 @@ export class ChatFooterComponent implements OnInit {
 
   getSelectedUser() {
     this.userService.userClickSubscription.subscribe((UserDetail: any) => {
-      console.log('Selected User:  ', UserDetail.user)
-      console.log('Selected User messages: ', UserDetail.messages)
-
       this.selectedUser = UserDetail.user.name
       this.selectedEmail = UserDetail.user.email
-      this.selectedUserId = UserDetail.user._id
-      
+      this.selectedUserId = UserDetail.user._id  
     })
   }
 
@@ -68,6 +64,7 @@ export class ChatFooterComponent implements OnInit {
   }
 
   onTyping(typingText: string) {
+    console.log('Typing to...',this.selectedUserId)
 
     const from: any = {
       senderUserId: this.fromUserId,
@@ -89,6 +86,7 @@ export class ChatFooterComponent implements OnInit {
         ts: Math.floor(Date.now() / 1000)
       }
     };
+    console.log('Typing message...',message)
     this.wsService.typing(message)
   }
 

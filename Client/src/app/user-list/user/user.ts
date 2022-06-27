@@ -11,4 +11,6 @@ export class User {
   selected:boolean=false;
   messages: string = '';
   createdAt: Date ;
+  messageCount:number;
+  typing:boolean;
 }

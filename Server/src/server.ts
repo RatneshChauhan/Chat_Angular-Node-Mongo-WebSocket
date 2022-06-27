@@ -70,7 +70,8 @@ io.on('connection', (socket) => {
     if (user) {
       socket.join(user.userID);
       console.log('User is typing a message! TYPING... ', user);
-      socket.broadcast.emit('TYPING', {
+     // socket.broadcast.emit('TYPING', {
+      socket.broadcast.to(user.to.recieverUserId).emit('TYPING', {
         text: 'typing',
         sentAt: null,
         to: user.to,

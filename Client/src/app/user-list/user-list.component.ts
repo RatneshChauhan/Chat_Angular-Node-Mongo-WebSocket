@@ -15,8 +15,6 @@ import { MessageService } from '../services/message.service';
 export class UserListComponent implements OnInit {
 
   userList: User[];
-  filteredUsers: User[];
-  // selectedUser: User;
   loading = false;
   searchedText = '';
   searchTxt: string
@@ -24,17 +22,14 @@ export class UserListComponent implements OnInit {
   messages: Message[] = []
   count: number = 0;
   loggedInUser: any
-  
-
-
 
   constructor(private userService: UserService,
     private messageService: MessageService,
     private wsService: WebsocketService) { }
 
   async ngOnInit() {
+
     this.userList = await this.userService.getUsers()
-    this.filteredUsers = this.userList;
 
     this.userService.userSearchSubscription.subscribe((txt: any) => {
       console.log('Searching...', txt)
@@ -78,7 +73,7 @@ export class UserListComponent implements OnInit {
     switch (data.text) {
       case 'typing':
         this.userList.map((obj: User) => {
-          obj.email === data.from.senderEmail ? obj.status = 'typing' : obj
+          obj.email === data.from.senderEmail ? (obj.status = 'typing', obj.typing = true) : obj
         })
         break;
 
@@ -97,19 +92,10 @@ export class UserListComponent implements OnInit {
       // default is for incoming message from WS
       default:
         this.userList.map((obj: User) => {
-          obj.email === data.from.senderEmail ? obj.status = 'online' : obj
+          if (!obj.messageCount)
+            obj.messageCount = 0
+          obj.email === data.from.senderEmail ? (obj.status = 'online', obj.messageCount += 1, obj.typing = false) : obj
         })
-        this.count += 1
-        //@ts-ignore
-        document.getElementById(data.from.senderUserId).innerHTML = ' <span '
-          + 'style="text-align: center; '
-          + 'color: black; '
-          + 'padding: 3px;">' + data.text + '</span>';
-
-        //@ts-ignore
-        document.getElementById(data.from.senderUserId + '_count').innerHTML =
-          ' <span class="msgCount" >' + this.count + '</span>';
-
     }
   }
 
@@ -139,19 +125,19 @@ export class UserListComponent implements OnInit {
     this.messageService.getMessages(selectedUserId, this.loggedInUser.userID).subscribe((res: any) => {
       this.loading = true;
       console.log('Selected Coversation: ', res)
-      this.messages= []
+      this.messages = []
       res.forEach((userMessages: any) => {
-        userMessages.messages.forEach((message:any) => {
+        userMessages.messages.forEach((message: any) => {
           this.messages.push(message)
         });
-        
+
         this.userService.userClickSubscription.next({ user: this.userList[index], messages: this.messages });
       });
     });
   }
 
   userClickHandler(data: any) {
-  
+
     const index: any = this.userList.findIndex((user: any) => user._id === data._id);
     this.getMessages(data._id, index);
     this.userList.forEach((user: any) => user.selected = false);
