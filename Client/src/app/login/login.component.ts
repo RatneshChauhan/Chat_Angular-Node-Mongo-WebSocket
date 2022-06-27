@@ -47,10 +47,11 @@ export class LoginComponent {
     this.setChangeValidate()
   }
 
-  theme(themeBackgroundColor: string, primaryBGColor: string, 
+  theme(themeBackgroundColor: string, primaryBGColor: string,
     borderColorSecondary: string, iconColorSecondary: string,
     headerColor: string, searchInputColor: string,
-    btnColor: string, textColor: string, activeColor: string) {
+    btnColor: string, textColor: string, activeColor: string,
+    scrollTrack: string, scrollThumb: string, scrollBorder: string, notificationColor: string) {
 
     this.styles = [
       { name: 'theme-bgcolor-primary', value: primaryBGColor },
@@ -62,6 +63,11 @@ export class LoginComponent {
       { name: 'theme-active-color', value: activeColor },
       { name: 'theme-text-color', value: textColor },
       { name: 'theme-background-color', value: themeBackgroundColor },
+
+      { name: 'theme-scrolltrack-color', value: scrollTrack },
+      { name: 'theme-scrollthumb-color', value: scrollThumb },
+      { name: 'theme-scrollborder-color', value: scrollBorder },
+      { name: 'theme-notification-color', value: notificationColor },
 
     ];
 
@@ -145,7 +151,9 @@ export class LoginComponent {
       createdAt: new Date(),
       //@ts-ignore
       description: this.signUp.get('description').value,
-      selected: false
+      selected: false,
+      messageCount: 0,
+      typing: false
 
     }
     //@ts-ignore

@@ -4,26 +4,69 @@
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 
 :root {
-  --theme-background-color:#075643;
+  // Default Theme values below
+  --theme-background-color: #075643;
   --theme-bgcolor-primary: #44af96;
   --theme-border-color: #a5f0b9;
   --theme-icon-color: white;
   --theme-header-color: rgb(11, 83, 83);
+  --theme-scrolltrack-color: rgb(11, 83, 83);
+  --theme-scrollthumb-color: #49f419;
+  --theme-scrollborder-color: #a5f0b9;
   --theme-search-color: white;
   --theme-header-footer-btn-color: #74e1c7;
-  --theme-active-color:#49f419;
-  --theme-text-color: black;
-   --font-weight: 300
+  --theme-active-color: #49f419;
+  --theme-text-color: white;
+  --theme-notification-color: #17ff26d6;
+  // --font-weight: 300
+}
+
+.contacts_body::-webkit-scrollbar {
+  width: 12px;
+  /* width of the entire scrollbar */
+}
+
+.contacts_body::-webkit-scrollbar-track {
+  background: var(--theme-scrolltrack-color);
+  /* color of the tracking area */
+}
+
+.contacts_body::-webkit-scrollbar-thumb {
+  background-color: var(--theme-scrollthumb-color);
+  /* color of the scroll thumb */
+  border-radius: 20px;
+  /* roundness of the scroll thumb */
+  border: 3px solid var(--theme-scrollborder-color);
+  /* creates padding around scroll thumb */
+}
+
+.msg_card_body::-webkit-scrollbar {
+  width: 12px;
+  /* width of the entire scrollbar */
+}
+
+.msg_card_body::-webkit-scrollbar-track {
+  background: var(--theme-scrolltrack-color);
+  /* color of the tracking area */
+}
+
+.msg_card_body::-webkit-scrollbar-thumb {
+  background-color: var(--theme-scrollthumb-color);
+  /* color of the scroll thumb */
+  border-radius: 20px;
+  /* roundness of the scroll thumb */
+  border: 3px solid var(--theme-scrollborder-color);
+  /* creates padding around scroll thumb */
 }
 
 body,
 html {
   height: 100%;
   margin: 0;
-  background: -webkit-linear-gradient(to right, var(--theme-background-color), 
-  var(--theme-background-color), var(--theme-background-color));
-  background: linear-gradient(to right, var(--theme-background-color), var(--theme-background-color), 
-  var(--theme-background-color));
+  background: -webkit-linear-gradient(to right, var(--theme-background-color),
+      var(--theme-background-color), var(--theme-background-color));
+  background: linear-gradient(to right, var(--theme-background-color), var(--theme-background-color),
+      var(--theme-background-color));
 }
 
 .chat {
@@ -52,7 +95,7 @@ html {
 }
 
 .type_msg {
-  background-color:#c8eded !important;
+  background-color: #c8eded !important;
   border: 0 !important;
   color: var(--theme-text-color) !important;
   height: 60px !important;
@@ -64,21 +107,21 @@ html {
   outline: 0px !important;
 }
 
-.send_btn{
+.send_btn {
   border-radius: 0 15px 15px 0 !important;
   background-color: var(--theme-header-footer-btn-color) !important;
-    border:0 !important;
-    color: white !important;
-    cursor: pointer;
-  }
+  border: 0 !important;
+  color: white !important;
+  cursor: pointer;
+}
 
-.attach_btn{
-    border-radius: 15px 0 0 15px !important;
-    background-color: var(--theme-header-footer-btn-color) !important;
-      border:0 !important;
-      color: white !important;
-      cursor: pointer;
-    }
+.attach_btn {
+  border-radius: 15px 0 0 15px !important;
+  background-color: var(--theme-header-footer-btn-color) !important;
+  border: 0 !important;
+  color: white !important;
+  cursor: pointer;
+}
 
 .search {
   border-radius: 15px 0 0 15px !important;
@@ -176,9 +219,9 @@ html {
   font-size: 20px;
 }
 
-.active{
+.active {
   background-color: var(--theme-active-color);
-} 
+}
 
 .action_menu {
   z-index: 1;
@@ -220,28 +263,60 @@ html {
   }
 }
 
-.card-header{
+.card-header {
   border-radius: 15px 15px 0 0 !important;
   border-bottom: 0 !important;
   background-color: var(--theme-header-color);
 }
 
+.msgCount {
+  font-size: 12px;
+  width: 20px;
+  height: 20px;
+  padding: 0px;
+  font-family: fantasy;
+  background: var(--theme-notification-color);
+  border-radius: 50%;
+  text-align: center;
+  color: var(--theme-text-color);
+  // border: 3px solid var(--theme-border-color);
+}
 
+div#wave {
+  position: relative;
+  margin-top: -3vh;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 
+  .dot {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    margin-right: 3px;
+    background: var(--theme-notification-color);
+    animation: wave 1.3s linear infinite;
 
-// .msgCount {
-//     flex: 1;
-//     font-size: 14px;
-//     opacity: 0.7;
-//     min-width: 65px;
-//     font-family: monospace;
-//     align-self: flex-end;
-//     background: darkgreen;
-//     border-radius: 50%;
-//     text-align: center;
-//     color: white;
-//     border: 2px solid lightseagreen;
-//     width: 36px;
-//     height: 36px;
-//     padding: 3px;
-// }
+    &:nth-child(2) {
+      animation-delay: -1.1s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: -0.9s;
+    }
+  }
+}
+
+@keyframes wave {
+
+  0%,
+  60%,
+  100% {
+    transform: initial;
+  }
+
+  30% {
+    transform: translateY(-15px);
+  }
+}
