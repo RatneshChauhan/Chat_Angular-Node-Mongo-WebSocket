@@ -6,6 +6,8 @@ import { Message } from '../message-list/message';
 import { WebsocketService } from '../services/websocket.service';
 import { User } from './user/user';
 import { MessageService } from '../services/message.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-user-list',
@@ -25,11 +27,14 @@ export class UserListComponent implements OnInit {
 
   constructor(private userService: UserService,
     private messageService: MessageService,
-    private wsService: WebsocketService) { }
+    private wsService: WebsocketService, public authService: AuthService,
+    private _snackBar: MatSnackBar) { }
 
   async ngOnInit() {
 
-    this.userList = await this.userService.getUsers()
+    this.loggedInUser = this.wsService.getLoggedInUser()
+
+    this.userList = await this.userService.getUsers(this.loggedInUser.email)
 
     this.userService.userSearchSubscription.subscribe((txt: any) => {
       console.log('Searching...', txt)
@@ -38,10 +43,17 @@ export class UserListComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.loggedInUser = this.wsService.getLoggedInUser()
 
     this.messageSub = this.wsService
-      .onEvent<Message>(IOEventName.WS_PRIVATE_EVENT + '_' + this.loggedInUser.userID as IOEventName)
+      .onEvent<Message>(IOEventName.WS_JOIN_EVENT)
+      .subscribe((data: any) => {
+        console.log('Side user list Websocket USER JOINED IN: ', data)
+        this.messageHandler(data)
+      });
+
+
+    this.messageSub = this.wsService
+      .onEvent<Message>(IOEventName.WS_PRIVATE_EVENT + '_' + this.loggedInUser.userId as IOEventName)
       .subscribe((data: any) => {
         console.log('Side user list Websocket PRIVATE Message: ', data)
         this.messageHandler(data)
@@ -70,35 +82,49 @@ export class UserListComponent implements OnInit {
   }
 
   messageHandler(data: any) {
+    const index: any = this.userList.findIndex((user: any) => user.email === data.from.senderEmail);
     switch (data.text) {
+      case 'join':
+        if (!index) {
+          this.userList.push(data.user);
+          this.handleNetwork(data.user.name, 'joined')
+        }
+        break;
+
       case 'typing':
-        this.userList.map((obj: User) => {
-          obj.email === data.from.senderEmail ? (obj.status = 'typing', obj.typing = true) : obj
-        })
+        this.userList[index].status = 'typing';
+        this.userList[index].typing = true;
         break;
 
       case 'online':
-        this.userList.map((obj: User) => {
-          obj.email === data.from.senderEmail ? obj.status = 'online' : obj
-        })
+        this.userList[index].status = 'online';
+        this.handleNetwork(data.from.senderUserName, 'online')
         break;
 
       case 'offline':
-        this.userList.map((obj: User) => {
-          obj.email === data.from.senderEmail ? obj.status = 'offline' : obj
-        })
+        this.userList[index].status = 'offline';
+        this.handleNetwork(data.from.senderUserName, 'offline')
         break;
 
       // default is for incoming message from WS
       default:
-        this.userList.map((obj: User) => {
-          if (!obj.messageCount)
-            obj.messageCount = 0
-          obj.email === data.from.senderEmail ? (obj.status = 'online', obj.messageCount += 1, obj.typing = false) : obj
-        })
+        if (!this.userList[index].messageCount)
+          this.userList[index].messageCount = 0;
+
+        this.userList[index].status = 'online';
+        this.userList[index].messageCount += 1
+        this.userList[index].typing = false
     }
   }
 
+  handleNetwork(user: string, status: string) {
+    if (this.authService.loggedIn && user) {
+      this._snackBar.open(user + " " + status, 'Dismiss', {
+        duration: 50000,
+        panelClass: ['ratnesh-snack']
+      });
+    }
+  }
 
   searchedUsers(value?: any) {
     if (value || (typeof value === 'string' && value.length === 0)) {
@@ -122,7 +148,7 @@ export class UserListComponent implements OnInit {
 
   getMessages(selectedUserId: string, index: number) {
 
-    this.messageService.getMessages(selectedUserId, this.loggedInUser.userID).subscribe((res: any) => {
+    this.messageService.getMessages(selectedUserId, this.loggedInUser.userId).subscribe((res: any) => {
       this.loading = true;
       console.log('Selected Coversation: ', res)
       this.messages = []
@@ -130,9 +156,8 @@ export class UserListComponent implements OnInit {
         userMessages.messages.forEach((message: any) => {
           this.messages.push(message)
         });
-
-        this.userService.userClickSubscription.next({ user: this.userList[index], messages: this.messages });
       });
+      this.userService.userClickSubscription.next({ user: this.userList[index], messages: this.messages });
     });
   }
 

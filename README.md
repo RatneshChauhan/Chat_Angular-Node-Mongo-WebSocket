@@ -30,3 +30,8 @@ A real time chat application
 
 1. Browse to http://localhost:4200
 
+
+
+### DEMO
+
+![Alt Text](https://github.com/RatneshChauhan/Chat-Angular-Node-Mongo-WebSocket/blob/DEV/screen-ratnesh.mp4)

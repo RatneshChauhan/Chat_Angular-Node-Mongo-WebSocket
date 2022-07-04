@@ -43,9 +43,9 @@ export class UserService {
     });
   }
 
-  getUsers() {
+  getUsers(email: string) {
     // get
-    return this.request('get', `/api/users`);
+    return this.request('get', `/api/users/`+email );
   }
 
   searchHandler(value: any) {

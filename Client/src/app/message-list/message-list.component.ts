@@ -57,9 +57,9 @@ export class MessageListComponent implements OnInit {
   getCurrentUser() {
     const loggedInUser = this.wsService.getLoggedInUser()
 
-    this.ownId = loggedInUser.userID;
-    this.ownEmail = loggedInUser.userEmail
-    this.ownUser = loggedInUser.userName
+    this.ownId = loggedInUser.userId;
+    this.ownEmail = loggedInUser.email
+    this.ownUser = loggedInUser.name
     this.getNewMessage()
   }
 
