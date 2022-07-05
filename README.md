@@ -32,6 +32,7 @@ A real time chat application
 
 
 
-### DEMO
 
-![Alt Text](https://github.com/RatneshChauhan/Chat-Angular-Node-Mongo-WebSocket/blob/DEV/screen-ratnesh.mp4)
+### DEMO
+[![Watch the demo]](screen-ratnesh.mp4)
+![alt text](ratnesh-screen-image.png "Title")
