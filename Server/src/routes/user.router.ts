@@ -6,8 +6,9 @@ import { UserService } from '../services/users.service'
 export const router: Router = Router();
 
 //@ts-ignore
-router.get('/api/users', function (req, res) {
-  Container.get<UserService>(UserService).getUsers()
+router.get('/api/users/:email', function (req, res) {
+  console.log("LoggedIn Email: ",req.params)
+  Container.get<UserService>(UserService).getUsers(req.params.email)
     .then((data) => {
       //  console.log('Users:  ', data)
       res.type("json");

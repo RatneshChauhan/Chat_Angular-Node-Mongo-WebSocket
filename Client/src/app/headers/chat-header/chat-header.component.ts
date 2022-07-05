@@ -17,6 +17,7 @@ export class ChatHeaderComponent implements OnInit {
     this.userService.userClickSubscription.subscribe((UserDetail: any) => {
       console.log('Selected User:  ', UserDetail)
       this.userName = UserDetail.user.name
+      this.msgCount = UserDetail.messages.length 
     })
   }
 

@@ -18,6 +18,7 @@ export class LoginComponent {
   public username: string = '';
   public password: string = '';
   public error: string = '';
+  user:User;
   signUp: FormGroup;
   loginn: FormGroup;
   titleAlert: string = 'This field is required';
@@ -43,18 +44,23 @@ export class LoginComponent {
   }
 
   ngOnInit() {
+    if (!this.authService.loggedIn)
+      document.documentElement.style.setProperty(`--theme-background-color`, 'white');
+    else
+      document.documentElement.style.setProperty(`--theme-background-color`, '#075643');
     this.createForm();
     this.setChangeValidate()
+    this.user = this.wsService.getLoggedInUser()
   }
 
-  theme(themeBackgroundColor: string, primaryBGColor: string,
+  theme(themeBackgroundColor: string, theme: string,
     borderColorSecondary: string, iconColorSecondary: string,
     headerColor: string, searchInputColor: string,
     btnColor: string, textColor: string, activeColor: string,
     scrollTrack: string, scrollThumb: string, scrollBorder: string, notificationColor: string) {
 
     this.styles = [
-      { name: 'theme-bgcolor-primary', value: primaryBGColor },
+      { name: 'theme-color', value: theme },
       { name: 'theme-border-color', value: borderColorSecondary },
       { name: 'theme-icon-color', value: iconColorSecondary },
       { name: 'theme-header-color', value: headerColor },
@@ -166,20 +172,21 @@ export class LoginComponent {
   }
 
   onLogin(post: any) {
-    // this.post = post;
+    document.documentElement.style.setProperty(`--theme-background-color`, '#075643');
     this.login()
   }
   public login() {
     //@ts-ignore
     this.authService.login(this.loginn.get('email').value, this.loginn.get('password').value)
-      .pipe(first())
-      .subscribe(
-        result => this.wsService.join(),
-        err => this.error = 'Could not authenticate'
-      )
+      .subscribe((result) => {
+        this.wsService.join()
+        this.user = this.wsService.getLoggedInUser()    
+      },
+      (err) => {console.log(err)});
   }
 
   logout() {
+    document.documentElement.style.setProperty(`--theme-background-color`, 'white');
     this.wsService.disconnect();
     this.authService.logout();
     this.router.navigate(['login']);

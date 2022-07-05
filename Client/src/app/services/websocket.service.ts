@@ -35,6 +35,7 @@ export class WebsocketService {
     const loggedInUser = this.getLoggedInUser()
     console.log('loggedInUser:  ', loggedInUser)
     this.socket.emit("joinUser", loggedInUser);
+    return loggedInUser
   }
 
   typing(message: any) {

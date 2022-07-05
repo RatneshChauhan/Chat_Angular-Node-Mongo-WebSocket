@@ -47,30 +47,40 @@ io.on('connection', (socket) => {
 
   socket.on('joinUser', (user) => {
     if (user) {
-      socket.join(user.userID);
+      // Define your own ID (for example user's id) and use in broadcast.to(id)
+      socket.join(user.userId);
+      // update user status as online
+      user.status = "online"
+      socket.broadcast.emit('JOIN', {
+        text: 'join',
+        sentAt: null,
+        to: '',
+        from: {
+          senderUserId: user.userId,
+          senderEmail: user.email,
+          senderUserName: user.name
+        }
+      })
       console.log('User joined in! ONNLINE ', user);
       socket.broadcast.emit('ONLINE', {
         text: 'online',
         sentAt: null,
         to: '',
         from: {
-          senderUserId: user.userID,
-          senderEmail: user.userEmail,
-          senderUserName: user.userName
+          senderUserId: user.userId,
+          senderEmail: user.email,
+          senderUserName: user.name
         }
-
       })
-      user.status = "online"
       Container.get<UserService>(UserService).updateUser(user)
-        .then((data) => { console.log('status updated: ', data) })
+        .then((data) => { console.log('user status updated: ', data) })
     }
   });
 
   socket.on('typing', (user) => {
     if (user) {
-      socket.join(user.userID);
       console.log('User is typing a message! TYPING... ', user);
-     // socket.broadcast.emit('TYPING', {
+      // socket.broadcast.emit('TYPING', {
       socket.broadcast.to(user.to.recieverUserId).emit('TYPING', {
         text: 'typing',
         sentAt: null,
@@ -90,9 +100,9 @@ io.on('connection', (socket) => {
       to: '',
       sentAt: null,
       from: {
-        senderUserId: user.userID,
-        senderEmail: user.userEmail,
-        senderUserName: user.userName
+        senderUserId: user.userId,
+        senderEmail: user.email,
+        senderUserName: user.name
       }
 
     })

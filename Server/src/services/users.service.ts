@@ -10,13 +10,15 @@ export class UserService {
 
   constructor() { }
 
-  public async  getUsers() {
-    const users = await User.find();
-    //return USERS;
+  public async getUsers(loggedInEmail: string) {
+    // ne => not equal to logged in email
+    // if name column exists in the doc
+    // sort by name
+    const users = await User.find({ email: { $ne: loggedInEmail }, name: { $exists: true } }).sort({ 'name': 1 });
     return users;
   }
 
-  public async  createUser(email, name, description, password) {
+  public async createUser(email, name, description, password) {
     let user = await new User({
       email: email,
       name: name,
@@ -45,8 +47,8 @@ export class UserService {
     }
   }
 
-  public async  updateUser(user) {
-    const filter = { _id: user.userID };
+  public async updateUser(user) {
+    const filter = { _id: user.userId };
     const update = {
       status: user.status
     };

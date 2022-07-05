@@ -36,9 +36,9 @@ export class ChatFooterComponent implements OnInit {
 
   getCurrentUser() {
     const loggedInUser = this.wsService.getLoggedInUser()
-    this.fromUserId = loggedInUser.userID;
-    this.fromUserEmail = loggedInUser.userEmail
-    this.fromUser = loggedInUser.userName
+    this.fromUserId = loggedInUser.userId;
+    this.fromUserEmail = loggedInUser.email
+    this.fromUser = loggedInUser.name
   }
 
   getSelectedUser() {

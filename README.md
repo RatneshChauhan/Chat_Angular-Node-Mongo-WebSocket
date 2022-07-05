@@ -11,13 +11,14 @@ A real time chat application
 * Push notifications when users joins / leaves  / types or sends messages
 * Using the Http object for Ajax calls along with RxJS observables
 * Using Pipe for searching users
-* Performing GET, PUT, POST and DELETE requests to the server
+* Performing GET, POST  requests to the server
 * Preserving chat history in mongo DB
+* MongoDB find and upsert operations
+* Responsive chat UI 
 
 ## Software Requirements To Run Locally 
 
 * Node.js 
-* MongoDB 
 
 ### Running the Application Locally
 
@@ -30,3 +31,9 @@ A real time chat application
 
 1. Browse to http://localhost:4200
 
+
+
+
+### DEMO
+[![Watch the demo]](screen-ratnesh.mp4)
+![alt text](ratnesh-screen-image.png "Title")

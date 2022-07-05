@@ -12,7 +12,7 @@ router.post('/api/auth', async (req, res) => {
   const body = req.body;
  // console.log('request body: ', body)
   let user;
-  Container.get<UserService>(UserService).getUsers().then((data) => {
+  Container.get<UserService>(UserService).getUsers(null).then((data) => {
   //  console.log('All Users:  ', data)
     user = data.find(user => user.email === body.email);
    // console.log('user for auth:  ', user)
@@ -22,7 +22,7 @@ router.post('/api/auth', async (req, res) => {
       
     
     //jwt.sign(payload, secretOrPrivateKey, [options, callback])
-    var token = jwt.sign({ userID: user.id, userName:user.name, userEmail:user.email }, process.env.SECRET, { expiresIn: '2h' });
+    var token = jwt.sign({ userId: user.id, name:user.name, email:user.email, createdAt:'Now' }, process.env.SECRET, { expiresIn: '2h' });
     res.send({ token });
 
   }).catch((error) => {
