@@ -15,42 +15,57 @@ import { User } from 'src/app/user-list/user/user';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  public username: string = '';
-  public password: string = '';
-  public error: string = '';
-  user:User;
-  signUp: FormGroup;
-  loginn: FormGroup;
-  titleAlert: string = 'This field is required';
-  post: any = '';
-  userModel: User;
+
   styles: any
+  userModel: User
+  error: string
+
+  name = 'Angular';
+  maxDate = new Date();
+  bsConfig = { showWeekNumbers: false, dateInputFormat: 'DD-MMM-YYYY' };
+  registerForm: FormGroup;
+  loginForm: FormGroup;
 
   constructor(public authService: AuthService, private wsService: WebsocketService,
-    private register: SignupService, private router: Router, private formBuilder: FormBuilder) {
-    this.signUp = this.formBuilder.group({
-      name: ['', null],
-      email: ['', Validators.compose([Validators.required, Validators.email])],
-      password: ['', Validators.required],
-      description: ['', Validators.requiredTrue]
-    })
-
-    this.loginn = this.formBuilder.group({
-      email: ['', Validators.compose([Validators.required, Validators.email])],
-      password: ['', Validators.required],
-
-    })
+    private register: SignupService, private router: Router, private fb: FormBuilder) {
 
   }
 
   ngOnInit() {
-    if (!this.authService.loggedIn)
-      document.documentElement.style.setProperty(`--theme-background-color`, 'white');
-    else
-      document.documentElement.style.setProperty(`--theme-background-color`, '#075643');
-    this.createForm();
-    this.setChangeValidate()
-    this.user = this.wsService.getLoggedInUser()
+    this.createRegisterForm()
+    this.createLoginForm()
+  }
+
+  createRegisterForm() {
+    this.registerForm = this.fb.group({
+      name: ['', Validators.compose([Validators.required])],
+      password: ['', Validators.compose([Validators.required])],
+      emailId: ['', Validators.compose([Validators.required,
+      Validators.pattern('^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')])],
+      mobile: ['', Validators.compose([Validators.required, Validators.maxLength(10), Validators.pattern('^[0-9]+$')])],
+      dob: ['', Validators.compose([Validators.required])]
+    });
+  }
+
+  createLoginForm() {
+    this.loginForm = this.fb.group({
+      emailIdLogin: ['', Validators.compose([Validators.required,
+      Validators.pattern('^[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')])],
+      password: ['', Validators.compose([Validators.required])],
+
+    });
+  }
+
+
+  get f() { return this.registerForm.controls; }
+  get l() { return this.loginForm.controls; }
+
+  registerFormSubmit(value: any) {
+    this.onRegister(value)
+  }
+
+  loginFormSubmit(value: any) {
+    this.onLogin(value)
   }
 
   theme(themeBackgroundColor: string, theme: string,
@@ -83,86 +98,32 @@ export class LoginComponent {
 
   }
 
-  createForm() {
-    let emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    this.signUp = this.formBuilder.group({
-      'email': [null, [Validators.required, Validators.pattern(emailregex)]],
-      'name': [null, Validators.required],
-      'password': [null, [Validators.required, this.checkPassword]],
-      'description': [null, [Validators.required, Validators.minLength(5), Validators.maxLength(10)]],
-      'validate': ''
-
-    });
-    this.loginn = this.formBuilder.group({
-      'email': [null, [Validators.required, Validators.pattern(emailregex)]],
-      'password': [null, [Validators.required, this.checkPassword]],
-      'validate': ''
-
-    });
-  }
-
-  setChangeValidate() {
-    this.signUp.get('validate')!.valueChanges.subscribe(
-      (validate) => {
-        if (validate == '1') {
-          this.signUp.get('name')!.setValidators([Validators.required, Validators.minLength(3)]);
-          this.titleAlert = "You need to specify at least 3 characters";
-        } else {
-          this.signUp.get('name')!.setValidators(Validators.required);
-        }
-        this.signUp.get('name')!.updateValueAndValidity();
-      }
-    )
-  }
-
-  get name() {
-    return this.signUp.get('name') as FormControl
-  }
-
-  checkPassword(control: any) {
-    let enteredPassword = control.value
-    let passwordCheck = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/;
-    return (!passwordCheck.test(enteredPassword) && enteredPassword) ? { 'requirements': true } : null;
-  }
-
-  getErrorEmail() {
-    return this.signUp.get('email')!.hasError('required') ? 'Field is required' :
-      this.signUp.get('email')!.hasError('pattern') ? 'Not a valid emailaddress' :
-        this.signUp.get('email')!.hasError('alreadyInUse') ? 'This emailaddress is already in use' : '';
-  }
-
-  getErrorEmailLogin() {
-    return this.loginn.get('email')!.hasError('required') ? 'Field is required' :
-      this.loginn.get('email')!.hasError('pattern') ? 'Not a valid emailaddress' :
-        this.loginn.get('email')!.hasError('alreadyInUse') ? 'This emailaddress is already in use' : '';
-  }
-
-  getErrorPassword() {
-    return this.signUp.get('password')!.hasError('required') ? 'Field is required (at least eight characters, one uppercase letter and one number)' :
-      this.signUp.get('password')!.hasError('requirements') ? 'Password needs to be at least eight characters, one uppercase letter and one number' : '';
-  }
-
-  onRegister(post: any) {
+  onRegister(postValue: any) {
+    console.log('Registering...', postValue)
     this.userModel = {
       //@ts-ignore
-      name: this.signUp.get('name').value,
-      lastName: '',
-      username: '',
+      name: postValue.name,
+      lastName: 'NA_LASTNAME',
       //@ts-ignore
-      email: this.signUp.get('email').value,
+      email: postValue.emailId,
       status: '',
       //@ts-ignore
-      password: this.signUp.get('password').value,
+      password: postValue.password,
       messages: '',
       createdAt: new Date(),
       //@ts-ignore
-      description: this.signUp.get('description').value,
+      description: 'NA_DESCRIPTION',
       selected: false,
       messageCount: 0,
-      typing: false
+      typing: false,
+      //@ts-ignore
+      phoneNumber: postValue.mobile,
+      //@ts-ignore
+      DOB: postValue.dob
+
 
     }
-    //@ts-ignore
+    // //@ts-ignore
     this.register.signup(this.userModel)
       .pipe(first())
       .subscribe(
@@ -171,25 +132,18 @@ export class LoginComponent {
       )
   }
 
-  onLogin(post: any) {
+  onLogin(postValue: any) {
     document.documentElement.style.setProperty(`--theme-background-color`, '#075643');
-    this.login()
+    this.login(postValue)
   }
-  public login() {
-    //@ts-ignore
-    this.authService.login(this.loginn.get('email').value, this.loginn.get('password').value)
+
+  public login(postValue:any) {
+    // @ts-ignore
+    this.authService.login(postValue.emailIdLogin, postValue.password)
       .subscribe((result) => {
         this.wsService.join()
-        this.user = this.wsService.getLoggedInUser()    
+        // this.user = this.wsService.getLoggedInUser()
       },
-      (err) => {console.log(err)});
+        (err) => { console.log(err) });
   }
-
-  logout() {
-    document.documentElement.style.setProperty(`--theme-background-color`, 'white');
-    this.wsService.disconnect();
-    this.authService.logout();
-    this.router.navigate(['login']);
-  }
-
 }

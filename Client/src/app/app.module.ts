@@ -9,16 +9,17 @@ import { LoginComponent } from './login/login.component';
 import { AuthService } from './auth.service';
 import { SignupService } from './services/signup.service';
 import { AuthGuard } from './auth.guard';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JwtModule } from '@auth0/angular-jwt';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { MessageListComponent } from './message-list/message-list.component';
 import { ChatFooterComponent } from './footer/chat-footer/chat-footer.component';
 import { ChatHeaderComponent } from './headers/chat-header/chat-header.component';
 import { UsersHeaderComponent } from './headers/users-header/users-header.component';
 import { SearchPipe } from './pipes/search.pipe';
+import { BsDatepickerModule, DatepickerModule } from 'ngx-bootstrap';
 
 
 export function tokenGetter() {
@@ -47,16 +48,18 @@ export function tokenGetter() {
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-     JwtModule.forRoot({
+    JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
         //@ts-ignore
         whitelistedDomains: ['localhost:3000'],
         blacklistedRoutes: ['localhost:3000/api/auth']
       }
-    })
+    }),
+    BsDatepickerModule.forRoot(),
+    DatepickerModule.forRoot()
   ],
-  providers: [ AuthService, SignupService, AuthGuard],
+  providers: [AuthService, SignupService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

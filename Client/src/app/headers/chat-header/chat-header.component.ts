@@ -21,4 +21,9 @@ export class ChatHeaderComponent implements OnInit {
     })
   }
 
+  toggleMenu(){
+    //@ts-ignore
+    document.getElementById("action_menu_id").classList.toggle('showMenu')
+  }
+
 }

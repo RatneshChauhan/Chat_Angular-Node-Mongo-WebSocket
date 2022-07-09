@@ -7,7 +7,7 @@ export const router: Router = Router();
 
 //@ts-ignore
 router.get('/api/users/:email', function (req, res) {
-  console.log("LoggedIn Email: ",req.params)
+  console.log("LoggedIn Email: ", req.params)
   Container.get<UserService>(UserService).getUsers(req.params.email)
     .then((data) => {
       //  console.log('Users:  ', data)
@@ -22,9 +22,10 @@ router.get('/api/users/:email', function (req, res) {
 router.post('/api/register', function (req, res) {
   const user = req.body.user
   console.log(user)
-  Container.get<UserService>(UserService).createUser(user.email, user.name, user.description, user.password)
+  Container.get<UserService>(UserService).
+    createUser(user.email, user.name, user.description, user.password, user.dob, user.phone)
     .then((data) => {
-      console.log('User SignUp:  ', data)
+      console.log('User SignedUp:  ', data)
       res.type("json");
       res.send(data);
     }).catch((error) => {
