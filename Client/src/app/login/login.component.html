@@ -1,99 +1,109 @@
-<mat-toolbar color="primary">
-  <span class="fill-remaining-space">{{user?.name}} </span>
-  <span *ngIf="authService.loggedIn" >
-    <button mat-icon-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger"
-      (mouseover)="menuTrigger.openMenu()">
-      <mat-icon>palette</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu" [overlapTrigger]="false">
-      <span (mouseleave)="menuTrigger.closeMenu()">
-        <button mat-menu-item (click)="theme('black','white','lightskyblue','lightskyblue',
-        'azure','#dde0e3', 'lightskyblue', 'black', '#6280b2' , 'white', 'black', 'white', 'red')">
-          <span>Theme-</span>
-          <span>Light</span>
-        </button>
-        <button mat-menu-item (click)="theme('white','black','lightskyblue','white',
-        '#151313','#211818', '#1a2d4c', 'white', '#414244', 'black', 'white', 'black', 'red')">
-          <span>Theme-</span>
-          <span>Dark</span>
-        </button>
-        <button mat-menu-item (click)="theme('black','red','pink','white',
-        '#7a0404','#f31616', 'pink', 'white', '#7e0b0b', 'red', 'brown', 'red', '#563e12de')">
-          <span>Theme-</span>
-          <span>Red</span>
-        </button>
-        <button mat-menu-item (click)="theme('black','blue','pink','white',
-        '#3f51b5','#180a79', 'lightblue', 'white', '#0b3f95', 'blue', 'indigo', 'blue', 'cyan')">
-          <span>Theme-</span>
-          <span>Blue</span>
-        </button>
-      </span>
-    </mat-menu>
-  </span>
-  <nav class="nav nav-pills">
-    <!-- <a class="nav-link" routerLink="users" routerLinkActive="active" *ngIf="auth.loggedIn">Users</a> -->
-    <!-- <a class="nav-link" (click)="logout()" href="#" *ngIf="auth.loggedIn">Logout</a> -->
-    <mat-icon *ngIf="authService.loggedIn" (click)="logout()" style="cursor:pointer" aria-hidden="false"
-      aria-label="Example home icon" matSuffix>logout</mat-icon>
-  </nav>
-</mat-toolbar>
+<div class="container" *ngIf="!authService.loggedIn">
+  <div class="row">
+    <div class="col">
+      <form [formGroup]="registerForm" (ngSubmit)="registerFormSubmit(registerForm.value)">
 
-<div fxLayout="row " fxLayout.lt-sm="column" fxLayoutGap="128px" *ngIf="!authService.loggedIn">
-  <form [formGroup]="signUp" (ngSubmit)="onRegister(signUp.value)">
-    <!-- <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="16px"> -->
-    <mat-form-field class="form-element">
-      <input matInput placeholder="Email" formControlName="email">
-      <mat-error *ngIf="!signUp.controls['email'].valid && signUp.controls['email'].touched">
-        {{ getErrorEmail() }}
-      </mat-error>
-    </mat-form-field>
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" formControlName="name" id="name" class="form-control" placeholder="Name" required
+            [ngClass]="{ 'is-invalid': f.name.touched && f.name.errors, 'is-valid': f.name.valid }">
+          <div *ngIf="f.name.touched && f.name.errors" class="invalid-feedback">
+            <div *ngIf="f.name.errors.required">Name is required!</div>
+          </div>
+        </div>
 
-    <mat-form-field class="form-element">
-      <input matInput placeholder="Name" formControlName="name">
-      <mat-error *ngIf="!name.valid && name.touched">
-        {{ titleAlert }}
-      </mat-error>
-    </mat-form-field>
-    <!-- </div> -->
-    <div class="break"></div> <!-- break -->
-    <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="16px">
-      <mat-form-field class="form-element">
-        <input matInput placeholder="Password" formControlName="password">
-        <mat-hint>Choose a password of at least eight characters, one uppercase letter and one number</mat-hint>
-        <mat-error *ngIf="!signUp.controls['password'].valid && signUp.controls['password'].touched">
-          {{ getErrorPassword() }}
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field class="form-element">
-        <input matInput placeholder="Description" formControlName="description" />
-        <mat-error *ngIf="!signUp.controls['description'].valid && signUp.controls['description'].touched">
-          Required field, must be between 5 and 10 characters.
-        </mat-error>
-      </mat-form-field>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="text"
+            [ngClass]="{ 'is-invalid': f.emailId.touched && f.emailId.errors, 'is-valid': f.emailId.valid }"
+            formControlName="emailId" id="email" class="form-control" placeholder="Email" required>
+          <div *ngIf="f.emailId.touched && f.emailId.errors" class="invalid-feedback">
+            <div *ngIf="f.emailId.errors.required">Email is required!</div>
+            <div *ngIf="f.emailId.errors.pattern">Enter Valid Email ID!</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="pass">Password:</label>
+          <input type="text"
+            [ngClass]="{ 'is-invalid': f.password.touched && f.password.errors, 'is-valid': f.password.valid }"
+            formControlName="password" id="passW" class="form-control" placeholder="Password" required>
+          <div *ngIf="f.password.touched && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Password is required!</div>
+            <!-- <div *ngIf="f.password.errors.pattern">Enter Valid Password!</div> -->
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="mobile">Mobile No:</label>
+          <input type="tel"
+            [ngClass]="{ 'is-invalid': f.mobile.touched && f.mobile.errors, 'is-valid': f.mobile.valid }"
+            formControlName="mobile" id="mobile" class="form-control" placeholder="Mobile" required>
+          <div *ngIf="f.mobile.touched && f.mobile.errors" class="invalid-feedback">
+            <div *ngIf="f.mobile.errors.required">Mobile is required!</div>
+            <div *ngIf="f.mobile.errors.pattern">Numeric Only Accepted!</div>
+            <div *ngIf="f.mobile.errors.maxlength">Mobile is not valid format!</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="dob">Date of Birth:</label>
+          <input type="text" [ngClass]="{ 'is-invalid': f.dob.touched && f.dob.errors, 'is-valid': f.dob.valid }"
+            class="form-control" formControlName="dob" id="dob" required placeholder="Date of Birth" #dp="bsDatepicker"
+            bsDatepicker [maxDate]="maxDate" [bsConfig]="bsConfig">
+          <div *ngIf="f.name.touched && f.name.errors" class="invalid-feedback">
+            <div *ngIf="f.name.errors.required">DOB is required!</div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12"></div>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12"></div>
+
+        <div class="row">
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <button type="submit" [disabled]="registerForm.invalid" class="btn btn-primary"> Register </button>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
 
-    <div class="form-element">
-      <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!signUp.valid">Sign up</button>
-    </div>
-  </form>
+    <!-- Login Form Template -->
+    <div class="col">
+      <form [formGroup]="loginForm" (ngSubmit)="loginFormSubmit(loginForm.value)">
 
-  <form [formGroup]="loginn" (ngSubmit)="onLogin(loginn.value)" class="form">
-    <mat-form-field class="form-element">
-      <input matInput placeholder="Email" formControlName="email">
-      <mat-error *ngIf="!loginn.controls['email'].valid && loginn.controls['email'].touched">
-        {{ getErrorEmailLogin() }}
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field class="form-element">
-      <input matInput placeholder="Password" formControlName="password">
-      <mat-hint>Enter your password</mat-hint>
-      <mat-error *ngIf="!loginn.controls['password'].valid && loginn.controls['password'].touched">
-        {{ getErrorPassword() }}
-      </mat-error>
-    </mat-form-field>
-    <div class="form-element">
-      <button mat-raised-button color="accent" type="submit" class="button" [disabled]="!loginn.valid">Login</button>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="text"
+            [ngClass]="{ 'is-invalid': l.emailIdLogin.touched && l.emailIdLogin.errors, 'is-valid': l.emailIdLogin.valid }"
+            formControlName="emailIdLogin" id="emailIdLoginn" class="form-control" placeholder="Email" required>
+          <div *ngIf="l.emailIdLogin.touched && l.emailIdLogin.errors" class="invalid-feedback">
+            <div *ngIf="l.emailIdLogin.errors.required">Email is required!</div>
+            <div *ngIf="l.emailIdLogin.errors.pattern">Enter Valid Email ID!</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Password:</label>
+          <input type="text"
+            [ngClass]="{ 'is-invalid': l.password.touched && l.password.errors, 'is-valid': l.password.valid }"
+            formControlName="password" id="passwd" class="form-control" placeholder="Password" required>
+          <div *ngIf="l.password.touched && l.password.errors" class="invalid-feedback">
+            <div *ngIf="l.password.errors.required">Password is required!</div>
+            <!-- <div *ngIf="f.password.errors.pattern">Enter Valid PWD!</div> -->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary"> Login </button>
+            </div>
+          </div>
+        </div>
+
+      </form>
     </div>
-  </form>
+  </div>
+
 </div>
-

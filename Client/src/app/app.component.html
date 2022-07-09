@@ -1,22 +1,37 @@
- <router-outlet></router-outlet>
-		<div class="container-fluid h-75" *ngIf="authService.loggedIn">
-			<div class="row justify-content-center h-100 no-gutters">
-				  <div class="col-md-4 col-xl-4 chat">
-				<div class="card mb-sm-3 mb-md-0 contacts_card">
-              <app-users-header></app-users-header>
-              <div class="card-body contacts_body">
-                  <app-user-list></app-user-list>
-              </div>
-              <div class="card-footer"></div>
-          </div></div>
-				<div class="col-md-8 col-xl-8 chat">
-					<div class="card">
-					<app-chat-header></app-chat-header>
-						<div class="card-body msg_card_body" #scrollMe (scroll)="onScroll()">
-						<app-message-list></app-message-list>					
-						</div>
-					<app-chat-footer></app-chat-footer>
+<router-outlet></router-outlet>
+
+<div class="container-fluid h-75" *ngIf="authService.loggedIn">
+	<div class="row justify-content-center h-100 no-gutters">
+		<div class="col-md-4 col-xl-4 chat">
+			<div class="card mb-sm-3 mb-md-0 contacts_card">
+				<app-users-header></app-users-header>
+				<div class="card-body contacts_body">
+					<app-user-list></app-user-list>
+				</div>
+				<div class="card-footer">
+					<span>{{userName}}</span>
+					<span id="action_menu_btn_own" (click)="toggleMenu()">
+						<i class="fas fa-ellipsis-v"></i></span>
+					<div class="action_menu" id="action_menu_id_own">
+						<ul>
+							<li><i class="fas fa-user-circle"></i> Update profile</li>
+							<li><i class="fas fa-ban"></i> Delete account</li>
+							<li (click)="logout()"><i class="fas fa-sign-out-alt"></i> Logout</li>
+						</ul>
 					</div>
+
+
 				</div>
 			</div>
 		</div>
+		<div class="col-md-8 col-xl-8 chat">
+			<div class="card">
+				<app-chat-header></app-chat-header>
+				<div class="card-body msg_card_body" #scrollMe (scroll)="onScroll()">
+					<app-message-list></app-message-list>
+				</div>
+				<app-chat-footer></app-chat-footer>
+			</div>
+		</div>
+	</div>
+</div>

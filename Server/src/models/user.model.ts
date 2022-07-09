@@ -18,13 +18,23 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  status:{
+  status: {
     type: String,
     default: 'offline'
   },
+  phone: {
+    status: {
+      type: String,
+      default: '98XXX123'
+    },
+  },
   createdAt: {
     type: String,
-    default: 'NA',
+    default: 'NA_CREATIONDATE',
+  },
+  DOB: {
+    type: String,
+    default: 'NA_DOB',
   },
 });
 

@@ -18,10 +18,12 @@ export class UserService {
     return users;
   }
 
-  public async createUser(email, name, description, password) {
+  public async createUser(email, name, description, password, dob, mobile) {
     let user = await new User({
       email: email,
       name: name,
+      phone:mobile,
+      dob:dob,
       description: description,
       password: password
     });
