@@ -36,4 +36,11 @@ A real time chat application
 
 ### DEMO
 [![Watch the demo]](screen-ratnesh.mp4)
-![alt text](ratnesh-screen-image.png "Title")
+
+
+### CHAT Screen
+![alt text](ratnesh-screen-image.png "CHAT")
+
+### SignUp and SignIn Screen
+![alt text](signup&signin-screen.png "Register OR Login")
+
