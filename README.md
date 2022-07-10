@@ -39,7 +39,8 @@ A real time chat application
 
 
 ### CHAT Screen
-![alt text](ratnesh-screen-image.png "CHAT")
+![alt text](chat-screen-image.png "CHAT")
+
 
 ### SignUp and SignIn Screen
 ![alt text](signup&signin-screen.png "Register OR Login")
