@@ -53,7 +53,7 @@ io.on('connection', (socket) => {
       user.status = "online"
       socket.broadcast.emit('JOIN', {
         text: 'join',
-        sentAt: null,
+        ts: null,
         to: '',
         from: {
           senderUserId: user.userId,
@@ -64,7 +64,7 @@ io.on('connection', (socket) => {
       console.log('User joined in! ONNLINE ', user);
       socket.broadcast.emit('ONLINE', {
         text: 'online',
-        sentAt: null,
+        ts: null,
         to: '',
         from: {
           senderUserId: user.userId,
@@ -83,7 +83,7 @@ io.on('connection', (socket) => {
       // socket.broadcast.emit('TYPING', {
       socket.broadcast.to(user.to.recieverUserId).emit('TYPING', {
         text: 'typing',
-        sentAt: null,
+        ts: null,
         to: user.to,
         from: user.from
 
@@ -98,7 +98,7 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('OFFLINE', {
       text: 'offline',
       to: '',
-      sentAt: null,
+      ts: null,
       from: {
         senderUserId: user.userId,
         senderEmail: user.email,

@@ -76,7 +76,6 @@ export class ChatFooterComponent implements OnInit {
       recieverUserName: this.selectedUser,
       recieverEmail: this.selectedEmail
     }
-
     const message = {
       ...new Message(),
       ...{

@@ -18,7 +18,7 @@ export class MessageService {
                     $or: [{ to: to }, { to: from }]
                 }
             ]
-        }).sort({ 'messages.sentAt': 1 })
+        }).sort({ 'messages.ts': 1 })
 
         return conversation
     }
@@ -36,7 +36,7 @@ export class MessageService {
                     to: message.to,
                     from: message.from,
                     text: message.text,
-                    sentAt: message.ts
+                    ts: message.ts
                 }
             }
         };
