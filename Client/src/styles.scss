@@ -336,12 +336,20 @@ div#wave {
   }
 }
 
+.displayName {
+  color: wheat;
+  font-size: 15px;
+  font-family: fantasy;
+}
+
 .ratnesh-snack {
   background: var(--theme-active-color);
   margin: 0 !important;
   position: absolute;
   left: 500px;
-  top: 30px;
+  bottom: 30px;
 }
 
-.showMenu {display: block;}
+.showMenu {
+  display: block;
+}
