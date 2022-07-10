@@ -91,7 +91,7 @@ export class MessageListComponent implements OnInit {
       to: message.to.recieverUserName,
       from: message.from.senderUserName,
       text: message.text,
-      ts: message.sentAt,
+      ts: message.ts,
       type: message.to.recieverUserName === this.selectedUser ? 'other' : 'own'
     })
   }
