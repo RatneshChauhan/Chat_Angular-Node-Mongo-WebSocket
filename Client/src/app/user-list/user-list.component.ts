@@ -8,22 +8,35 @@ import { User } from './user/user';
 import { MessageService } from '../services/message.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../auth.service';
+import { trigger, transition, style, animate } from '@angular/animations';
+
 
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss']
+  styleUrls: ['./user-list.component.scss'],
+  animations: [
+    trigger('fade', [
+      transition('void => online', [
+        style({ opacity: 0 }),
+        animate(1000, style({ opacity: 1 }))
+      ]),
+      transition('online => void', [
+        animate(1000, style({ opacity: 0 }))
+      ])
+    ])
+  ]
 })
 export class UserListComponent implements OnInit {
 
   userList: User[];
-  loading = false;
   searchedText = '';
   searchTxt: string
   messageSub: Subscription;
   messages: Message[] = []
   count: number = 0;
-  loggedInUser: any
+  loggedInUser: any;
+  
 
   constructor(private userService: UserService,
     private messageService: MessageService,
@@ -149,7 +162,7 @@ export class UserListComponent implements OnInit {
   getMessages(selectedUserId: string, index: number) {
 
     this.messageService.getMessages(selectedUserId, this.loggedInUser.userId).subscribe((res: any) => {
-      this.loading = true;
+      
       console.log('Selected Coversation: ', res)
       this.messages = []
       res.forEach((userMessages: any) => {
@@ -167,6 +180,7 @@ export class UserListComponent implements OnInit {
     this.getMessages(data._id, index);
     this.userList.forEach((user: any) => user.selected = false);
     this.userList[index].selected = true;
+    this.userList[index].messageCount = 0;
   }
 
   // getSelectedUserIndex() {

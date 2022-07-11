@@ -16,8 +16,10 @@
                         <span class="dot"></span>
                         <span class="dot"></span>
                     </div>
+                    
                 </div>
-                <div *ngIf="user.messageCount>0" class="msgCount">{{user.messageCount}}</div>
+                <div *ngIf="user.messageCount>0 && !user.selected" [@fade]="user.status" class="msgCount">{{user.messageCount}}</div>
+                <div *ngIf="user.messageCount>0 && user.selected" [@fade]=""></div>
             </div>
         </li>
     </ul>

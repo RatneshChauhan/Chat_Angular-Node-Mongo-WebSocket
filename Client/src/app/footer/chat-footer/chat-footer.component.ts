@@ -19,6 +19,7 @@ export class ChatFooterComponent implements OnInit {
   fromUserEmail: string
   fromUser: string
   msgTxt: string
+  placeHolder: string = "Please select a user to send messages"
   @Output('messageSubmitted') messageSubmitted = new EventEmitter();
 
   form: FormGroup;
@@ -32,6 +33,8 @@ export class ChatFooterComponent implements OnInit {
   ngOnInit(): void {
     this.getCurrentUser()
     this.getSelectedUser()
+    //@ts-ignore
+    document.getElementById("msgArea").disabled = true;
   }
 
   getCurrentUser() {
@@ -45,7 +48,12 @@ export class ChatFooterComponent implements OnInit {
     this.userService.userClickSubscription.subscribe((UserDetail: any) => {
       this.selectedUser = UserDetail.user.name
       this.selectedEmail = UserDetail.user.email
-      this.selectedUserId = UserDetail.user._id  
+      this.selectedUserId = UserDetail.user._id
+
+      this.placeHolder = "Type your message..."
+
+      //@ts-ignore
+      document.getElementById("msgArea").disabled = false;
     })
   }
 
@@ -64,7 +72,7 @@ export class ChatFooterComponent implements OnInit {
   }
 
   onTyping(typingText: string) {
-    console.log('Typing to...',this.selectedUserId)
+    console.log('Typing to...', this.selectedUserId)
 
     const from: any = {
       senderUserId: this.fromUserId,
@@ -85,7 +93,7 @@ export class ChatFooterComponent implements OnInit {
         ts: Math.floor(Date.now() / 1000)
       }
     };
-    console.log('Typing message...',message)
+    console.log('Typing message...', message)
     this.wsService.typing(message)
   }
 
@@ -97,14 +105,14 @@ export class ChatFooterComponent implements OnInit {
     const from: any = { senderUserId: this.fromUserId, senderUserName: this.fromUser, senderEmail: this.fromUserEmail }
     const to: any = { recieverUserId: this.selectedUserId, recieverUserName: this.selectedUser, recieverEmail: this.selectedEmail }
 
-    const message:Message = {
-      
-        to: to,
-        from: from,
-        text: messageText,
-        ts: Math.floor(Date.now() / 1000),
-        type:'own'
-      
+    const message: Message = {
+
+      to: to,
+      from: from,
+      text: messageText,
+      ts: Math.floor(Date.now() / 1000),
+      type: 'own'
+
     };
 
 

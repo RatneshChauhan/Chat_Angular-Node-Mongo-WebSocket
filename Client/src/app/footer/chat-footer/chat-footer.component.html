@@ -5,7 +5,7 @@
       <div class="input-group-append">
         <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
       </div>
-      <textarea name="" [(ngModel)]="msgTxt" class="form-control type_msg" placeholder="Type your message..." (keypress)="keyPressed($event)"></textarea>
+      <textarea id="msgArea" disabled  name="" [(ngModel)]="msgTxt" class="form-control type_msg" placeholder="{{placeHolder}}" (keypress)="keyPressed($event)"></textarea>
       <div class="input-group-append">
         <span class="input-group-text send_btn" (click)="onSubmit($event)" ><i class="fas fa-location-arrow"></i></span>
       </div>
