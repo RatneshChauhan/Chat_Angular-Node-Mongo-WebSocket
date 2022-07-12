@@ -9,7 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthService } from './auth.service';
 import { SignupService } from './services/signup.service';
 import { AuthGuard } from './auth.guard';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -20,6 +20,11 @@ import { ChatHeaderComponent } from './headers/chat-header/chat-header.component
 import { UsersHeaderComponent } from './headers/users-header/users-header.component';
 import { SearchPipe } from './pipes/search.pipe';
 import { BsDatepickerModule, DatepickerModule } from 'ngx-bootstrap';
+import { LoaderService } from './services/loader.service';
+import { LoaderInterceptor } from './interceptors/loader-interceptor.service';
+import { MyLoaderComponent } from './loader/my-loader/my-loader.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+
 
 
 export function tokenGetter() {
@@ -37,13 +42,15 @@ export function tokenGetter() {
     ChatFooterComponent,
     ChatHeaderComponent,
     UsersHeaderComponent,
-    SearchPipe
+    SearchPipe,
+    MyLoaderComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
+    NgxSpinnerModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
@@ -59,7 +66,10 @@ export function tokenGetter() {
     BsDatepickerModule.forRoot(),
     DatepickerModule.forRoot()
   ],
-  providers: [AuthService, SignupService, AuthGuard],
+  providers: [AuthService, SignupService, AuthGuard,
+    LoaderService,
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
