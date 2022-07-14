@@ -36,7 +36,7 @@ export class UserListComponent implements OnInit {
   messages: Message[] = []
   count: number = 0;
   loggedInUser: any;
-  
+
 
   constructor(private userService: UserService,
     private messageService: MessageService,
@@ -121,11 +121,11 @@ export class UserListComponent implements OnInit {
 
       // default is for incoming message from WS
       default:
-        if (!this.userList[index].messageCount)
-          this.userList[index].messageCount = 0;
+        if (!this.userList[index].unreadMessageCount)
+          this.userList[index].unreadMessageCount = 0;
 
         this.userList[index].status = 'online';
-        this.userList[index].messageCount += 1
+        this.userList[index].unreadMessageCount += 1
         this.userList[index].typing = false
     }
   }
@@ -162,11 +162,12 @@ export class UserListComponent implements OnInit {
   getMessages(selectedUserId: string, index: number) {
 
     this.messageService.getMessages(selectedUserId, this.loggedInUser.userId).subscribe((res: any) => {
-      
+
       console.log('Selected Coversation: ', res)
       this.messages = []
       res.forEach((userMessages: any) => {
         userMessages.messages.forEach((message: any) => {
+          message.seen = true
           this.messages.push(message)
         });
       });
@@ -178,9 +179,9 @@ export class UserListComponent implements OnInit {
 
     const index: any = this.userList.findIndex((user: any) => user._id === data._id);
     this.getMessages(data._id, index);
-    this.userList.forEach((user: any) => user.selected = false);
+    this.removeSelection()
     this.userList[index].selected = true;
-    this.userList[index].messageCount = 0;
+    this.userList[index].unreadMessageCount = 0;
   }
 
   // getSelectedUserIndex() {

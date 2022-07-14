@@ -46,6 +46,7 @@ export class ChatFooterComponent implements OnInit {
 
   getSelectedUser() {
     this.userService.userClickSubscription.subscribe((UserDetail: any) => {
+      console.log('User clicked:', UserDetail)
       this.selectedUser = UserDetail.user.name
       this.selectedEmail = UserDetail.user.email
       this.selectedUserId = UserDetail.user._id
@@ -111,7 +112,8 @@ export class ChatFooterComponent implements OnInit {
       from: from,
       text: messageText,
       ts: Math.floor(Date.now() / 1000),
-      type: 'own'
+      type: 'own',
+      seen: false
 
     };
 

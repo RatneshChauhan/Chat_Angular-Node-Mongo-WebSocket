@@ -9,7 +9,7 @@ export const router: Router = Router();
 //@ts-ignore
 router.post('/api/saveMessages', function (req, res) {
    console.log("Incoming message to save: "+req.body)
-    Container.get<MessageService>(MessageService).saveMessage(req.body)
+    Container.get<MessageService>(MessageService).upsertMessage(req.body,false)
     .then((data) => {
    // console.log('Saved Messages:  ', data)
     res.type("json");

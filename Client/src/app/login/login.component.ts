@@ -83,7 +83,7 @@ export class LoginComponent {
       //@ts-ignore
       description: 'NA_DESCRIPTION',
       selected: false,
-      messageCount: 0,
+      unreadMessageCount: 0,
       typing: false,
       //@ts-ignore
       phoneNumber: postValue.mobile,

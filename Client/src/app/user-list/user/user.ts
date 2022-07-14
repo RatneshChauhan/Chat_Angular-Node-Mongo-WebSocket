@@ -10,7 +10,7 @@ export class User {
   selected: boolean = false;
   messages: string = '';
   createdAt: Date;
-  messageCount: number;
+  unreadMessageCount: number;
   typing: boolean;
   phoneNumber: string
   DOB: Date

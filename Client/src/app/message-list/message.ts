@@ -4,4 +4,5 @@ export class Message {
   text: string;
   ts: number;
   type: string;
+  seen:boolean
 }

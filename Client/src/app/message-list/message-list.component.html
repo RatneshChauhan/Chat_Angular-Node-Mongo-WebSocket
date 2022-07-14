@@ -6,6 +6,9 @@
                 <span ngClass="msg_time_send">
                     {{message.ts| date : 'HH:mm:ss'}}
                 </span>
+                <span *ngIf ="message.seen" ngClass="msg_read">
+                    <i class="fas fa-check-double" aria-hidden="true"></i>
+                </span>
             </div>
             <div ngClass="img_cont_msg">
                 <img src="https://picsum.photos/200/300" class="rounded-circle user_img_msg">
