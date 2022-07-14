@@ -18,8 +18,8 @@
                     </div>
                     
                 </div>
-                <div *ngIf="user.messageCount>0 && !user.selected" [@fade]="user.status" class="msgCount">{{user.messageCount}}</div>
-                <div *ngIf="user.messageCount>0 && user.selected" [@fade]=""></div>
+                <div *ngIf="user.unreadMessageCount>0 && !user.selected" [@fade]="user.status" class="msgCount">{{user.unreadMessageCount}}</div>
+                <div *ngIf="user.unreadMessageCount>0 && user.selected" [@fade]=""></div>
             </div>
         </li>
     </ul>

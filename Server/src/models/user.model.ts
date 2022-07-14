@@ -23,10 +23,8 @@ const userSchema = new mongoose.Schema({
     default: 'offline'
   },
   phone: {
-    status: {
       type: String,
       default: '98XXX123'
-    },
   },
   createdAt: {
     type: String,

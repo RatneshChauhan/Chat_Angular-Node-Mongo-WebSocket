@@ -13,6 +13,7 @@ import { router as messageRouter } from './routes/message.router'
 
 import { Container } from 'typedi'
 import { UserService } from './services/users.service'
+import { MessageService } from './services/message.service';
 
 app.use(authRouter);
 app.use(userRouter);
@@ -47,7 +48,7 @@ io.on('connection', (socket) => {
 
   socket.on('joinUser', (user) => {
     if (user) {
-      // Define your own ID (for example user's id) and use in broadcast.to(id)
+      // Define your own id (for example user's id) which is used in broadcast.to(id)
       socket.join(user.userId);
       // update user status as online
       user.status = "online"
@@ -73,7 +74,7 @@ io.on('connection', (socket) => {
         }
       })
       Container.get<UserService>(UserService).updateUser(user)
-        .then((data) => { console.log('user status updated: ', data) })
+        .then((data) => { console.log('user updated: ', data) })
     }
   });
 
@@ -94,6 +95,24 @@ io.on('connection', (socket) => {
     }
   });
 
+  socket.on('seen', (user, messages) => {
+    if (user) {
+      console.log('mark as seen :: SEEN USER... ', user);
+      console.log('mark as seen :: SEEN MESSAGES... ', messages);
+      socket.broadcast.to(user._id).emit('SEEN', {
+        text: 'seen',
+        user: user,
+        messages: messages
+      })
+      if(messages.length > 0)
+      messages.forEach((message, index) =>{
+        Container.get<MessageService>(MessageService).upsertMessage(message,true)
+        .then((data) => { console.log('message updated: ', data) })
+      });
+     
+    }
+  });
+
   socket.on('forceDisconnect', (user) => {
     socket.broadcast.emit('OFFLINE', {
       text: 'offline',
@@ -108,7 +127,7 @@ io.on('connection', (socket) => {
     })
     user.status = "offline"
     Container.get<UserService>(UserService).updateUser(user)
-      .then((data) => { console.log('status updated: ', data) })
+      .then((data) => { console.log('user updated: ', data) })
     console.log('Byeee bro! OFFLINE ', user)
     // socket.disconnect()
   })

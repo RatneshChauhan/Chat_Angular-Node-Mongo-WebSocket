@@ -26,7 +26,6 @@ import { environment } from '../../environments/environment';
 export class MessageListComponent implements OnInit {
 
   socket: any;
-
   messageModel: Message = new Message();
   chat: Message[] = [];
   selectedUser = '';
@@ -35,8 +34,8 @@ export class MessageListComponent implements OnInit {
   ownId: string
   ownEmail: string
   ownUser: string
-  loading = false;
   messageSub: Subscription;
+  seen: boolean;
 
   constructor(private jwtHelper: JwtHelperService,
     private wsService: WebsocketService, private route: ActivatedRoute,
@@ -61,6 +60,7 @@ export class MessageListComponent implements OnInit {
     this.ownEmail = loggedInUser.email
     this.ownUser = loggedInUser.name
     this.getNewMessage()
+    this.markAsSeen()
   }
 
   // Database messages
@@ -73,16 +73,15 @@ export class MessageListComponent implements OnInit {
       this.selectedUser = UserDetail.user.name
       this.selectedEmail = UserDetail.user.email
       this.selectedUserId = UserDetail.user._id
-      this.loading = true;
+
+      this.wsService.sendSeenReciept(UserDetail.user, UserDetail.messages)
 
       this.chat = []
-
       UserDetail.messages.forEach((message: any) => {
         this.updateChatWindow(message)
       });
 
       this.messagesSortByTS(this.chat)
-      this.loading = false
     });
   }
 
@@ -92,11 +91,13 @@ export class MessageListComponent implements OnInit {
       from: message.from.senderUserName,
       text: message.text,
       ts: message.ts,
-      type: message.to.recieverUserName === this.selectedUser ? 'other' : 'own'
+      type: message.to.recieverUserName === this.selectedUser ? 'other' : 'own',
+      seen: message.seen ? true : false
+
     })
   }
 
-  //WebSocket Message
+  //WebSocket Message (Pvt event)
   getNewMessage() {
     this.messageSub = this.wsService
       .onEvent<Message>(IOEventName.WS_PRIVATE_EVENT + '_' + this.ownId as IOEventName)
@@ -109,12 +110,24 @@ export class MessageListComponent implements OnInit {
       });
   }
 
-
+  //WebSocket Message (Seen event)
+  markAsSeen() {
+    this.messageSub = this.wsService
+      .onEvent<Message>(IOEventName.WS_SEEN)
+      .subscribe((data: any) => {
+        console.log('Mark as read: ', data.messages)
+        this.chat = []
+        data.messages.forEach((item: any) => {
+          item.seen = true
+          this.updateChatWindow(item)
+        });
+        this.messagesSortByTS(this.chat)
+      });
+  }
 
   ngAfterViewInit() {
 
   }
-
 
   ngOnDestroy() {
     if (this.messageSub) {
@@ -128,8 +141,4 @@ export class MessageListComponent implements OnInit {
       return x.ts - y.ts;
     });
   }
-
-
-
-
 }

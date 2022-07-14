@@ -5,4 +5,5 @@ export enum IOEventName {
     WS_CONNECT_EVENT = "ONLINE",
     WS_DISCONNECT_EVENT = "OFFLINE",
     WS_TYPING_EVENT = "TYPING",
+    WS_SEEN = "SEEN",
 }

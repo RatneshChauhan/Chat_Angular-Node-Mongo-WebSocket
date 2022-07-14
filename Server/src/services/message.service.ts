@@ -23,37 +23,61 @@ export class MessageService {
         return conversation
     }
 
-    public async  saveMessage(message: any) {
+    public async upsertMessage(message: any, seen: boolean) {
 
-        const conversationId = message.to.recieverUserId + '--|--' + message.from.senderUserId
-
+        const conversationId = message.to.recieverUserId;
         const filter = { conversationId };
-        const update = {
-            to: message.to.recieverUserId,
-            from: message.from.senderUserId,
-            $push: {
-                messages: {
-                    to: message.to,
-                    from: message.from,
-                    text: message.text,
-                    ts: message.ts
+
+        if (seen) {
+            await this.markAsSeen(conversationId)
+        }
+        else {
+            const update = {
+                to: message.to.recieverUserId,
+                from: message.from.senderUserId,
+                $push: {
+                    messages: {
+                        to: message.to,
+                        from: message.from,
+                        text: message.text,
+                        ts: message.ts,
+                        seen: message.seen
+                    }
                 }
+            };
+            try {
+                // `doc` is the document _after_ `update` was applied because of
+                // `new: true`
+
+
+                let doc = await Conversation.findOneAndUpdate(filter, update, {
+                    new: true,
+                    upsert: true // Make this update into an upsert
+                });
+
+                return doc;
+
+            } catch (e) {
+                console.log('MongoDB Error while saving message', e);
             }
-        };
-
-        try {
-            // `doc` is the document _after_ `update` was applied because of
-            // `new: true`
-            let doc = await Conversation.findOneAndUpdate(filter, update, {
-                new: true,
-                upsert: true // Make this update into an upsert
-            });
-
-            return doc;
-
-        } catch (e) {
-            console.log('MongoDB Error while saving message', e);
         }
     }
+    private markAsSeen(id: string) {
+        let doc = Conversation.collection.update({},
+            {
+                $set: {
+                    "messages.$[elm].seen": true
+                }
+            },
+            {
+                multi: true,
+                arrayFilters: [
+                    {
+                        "elm.to.recieverUserId": id
+                    }
+                ]
+            })
 
+        return doc;
+    }
 }

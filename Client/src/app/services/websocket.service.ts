@@ -31,6 +31,10 @@ export class WebsocketService {
     this.socket.emit("privateMessage", message);
   }
 
+  sendSeenReciept(user: any, messages:any) {
+    this.socket.emit("seen", user, messages);
+  }
+
   join() {
     const loggedInUser = this.getLoggedInUser()
     console.log('loggedInUser:  ', loggedInUser)
