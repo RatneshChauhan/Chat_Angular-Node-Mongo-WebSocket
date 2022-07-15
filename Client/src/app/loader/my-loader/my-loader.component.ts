@@ -1,7 +1,6 @@
 // my-loader.component.ts
 import { Component, OnInit } from '@angular/core';
 import { LoaderService } from '../../services/loader.service';
-import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-my-loader',
@@ -12,14 +11,11 @@ export class MyLoaderComponent implements OnInit {
 
   loading: boolean;
 
-  constructor(private loaderService: LoaderService, private spinner: NgxSpinnerService) {
+  constructor(private loaderService: LoaderService) {
 
     this.loaderService.isLoading.subscribe((v) => {
-      console.log(v);
-      if(v)
-      this.spinner.show();
-      else
-      this.spinner.hide();
+      console.log('isLoading', v);
+     
       
       this.loading = v;
     });
