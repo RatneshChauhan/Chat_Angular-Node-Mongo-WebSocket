@@ -23,7 +23,6 @@ import { BsDatepickerModule, DatepickerModule } from 'ngx-bootstrap';
 import { LoaderService } from './services/loader.service';
 import { LoaderInterceptor } from './interceptors/loader-interceptor.service';
 import { MyLoaderComponent } from './loader/my-loader/my-loader.component';
-import { NgxSpinnerModule } from "ngx-spinner";
 
 
 
@@ -50,7 +49,6 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    NgxSpinnerModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
