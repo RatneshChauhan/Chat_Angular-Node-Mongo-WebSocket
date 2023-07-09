@@ -16,10 +16,6 @@ A real time chat application
 * MongoDB find and upsert operations
 * Responsive chat UI 
 
-## Software Requirements To Run Locally 
-
-* Node.js 
-
 ### Running the Application Locally
 
 1. Install Node.js  
@@ -30,13 +26,3 @@ A real time chat application
 1. Run `npm start` to compile the TypeScript and start the client and server
 
 1. Browse to http://localhost:4200
-
-
-### SignUp and SignIn Screen
-![ScreenShot](signup&signin-screen.png "Register OR Login")
-
-### CHAT Screen
-![ScreenShot](chat-screen-image.png "CHAT")
-
-### DEMO
-[![Watch the demo]](screen-ratnesh.mp4)
