@@ -32,16 +32,11 @@ A real time chat application
 1. Browse to http://localhost:4200
 
 
+### SignUp and SignIn Screen
+![ScreenShot](signup&signin-screen.png "Register OR Login")
 
+### CHAT Screen
+![ScreenShot](chat-screen-image.png "CHAT")
 
 ### DEMO
 [![Watch the demo]](screen-ratnesh.mp4)
-
-
-### CHAT Screen
-![alt text](chat-screen-image.png "CHAT")
-
-
-### SignUp and SignIn Screen
-![alt text](signup&signin-screen.png "Register OR Login")
-
