@@ -9,21 +9,27 @@
 
 :root {
   // Default Theme values below
-  --theme-background-color: #075643;
-  --theme-color: #44af96;
-  --theme-border-color: #a5f0b9;
-  --theme-icon-color: white;
-  --theme-header-color: rgb(11, 83, 83);
-  --theme-scrolltrack-color: rgb(11, 83, 83);
-  --theme-scrollthumb-color: #49f419;
-  --theme-scrollborder-color: #a5f0b9;
-  --theme-search-color: rgb(22, 57, 17);
+  --theme-background-color: #fafafa;
+  --theme-color: #f3f3f3;
+  --theme-border-color: #fefefe;
+  --theme-icon-color: rgb(18, 17, 17);
+  --theme-header-color: rgb(138, 227, 227);
+  --theme-scrolltrack-color: rgb(223, 226, 226);
+  --theme-scrollthumb-color: #a9dfb9;
+  --theme-scrollborder-color: #e4e4e4;
+  --theme-search-color: rgb(217, 240, 214);
   --theme-header-footer-btn-color: #74e1c7;
-  --theme-active-color: #49f419;
-  --theme-text-color: white;
+  --theme-active-color: #787c77;
+  --theme-text-color: rgb(7, 1, 1);
   --theme-notification-color: #17ff26d6;
   // --font-weight: 300
 }
+
+.user-bar{
+  text-align: center;
+    height: 5%;
+    background:#0e74e2;
+  }
 
 .contacts_body::-webkit-scrollbar {
   width: 12px;
@@ -79,7 +85,7 @@ html {
 }
 
 .card {
-  height: 500px;
+  height: 565px;
   border-radius: 15px !important;
   background-color: var(--theme-color) !important;
 }
@@ -228,7 +234,6 @@ html {
 #action_menu_btn_own {
   position: absolute;
   right: 10px;
-  top: 460px;
   color: var(--theme-icon-color);
   cursor: pointer;
   font-size: 20px;
@@ -337,7 +342,7 @@ div#wave {
 }
 
 .displayName {
-  color: wheat;
+  color: rgb(242, 240, 238);
   font-size: 15px;
   font-family: fantasy;
 }
@@ -347,7 +352,7 @@ div#wave {
   margin: 0 !important;
   position: absolute;
   left: 500px;
-  bottom: 30px;
+  top: 30px;
 }
 
 .showMenu {

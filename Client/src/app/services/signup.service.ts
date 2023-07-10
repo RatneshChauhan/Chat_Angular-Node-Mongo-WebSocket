@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { User } from 'src/app/user-list/user/user';
+import { User } from '../components/user-list/user/user';
 
 @Injectable()
 export class SignupService {

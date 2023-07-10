@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
 //import { OktaAuthService } from '@okta/okta-angular';
-import { Message } from '../message-list/message';
+import { Message } from '../components/message-list/message';
 import { Subject, Observable } from 'rxjs';
 
 

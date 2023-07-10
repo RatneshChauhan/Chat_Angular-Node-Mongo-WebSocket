@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { UserListComponent } from './user-list/user-list.component';
+import { UserListComponent } from './components/user-list/user-list.component';
 import { AuthGuard } from './auth.guard';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 
 const routes: Routes = [
   { path: 'users', component: UserListComponent, canActivate: [AuthGuard] },
-  { path: '', component: LoginComponent} ,];
+  { path: '', component: LandingPageComponent} ,];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

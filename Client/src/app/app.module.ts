@@ -3,9 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { UserListComponent } from './user-list/user-list.component';
-import { UserComponent } from './user-list/user/user.component';
-import { LoginComponent } from './login/login.component';
+import { UserListComponent } from './components/user-list/user-list.component';
+import { UserComponent } from './components/user-list/user/user.component';
+import { LoginComponent } from './components/login/login.component';
 import { AuthService } from './auth.service';
 import { SignupService } from './services/signup.service';
 import { AuthGuard } from './auth.guard';
@@ -14,15 +14,18 @@ import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JwtModule } from '@auth0/angular-jwt';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MessageListComponent } from './message-list/message-list.component';
-import { ChatFooterComponent } from './footer/chat-footer/chat-footer.component';
-import { ChatHeaderComponent } from './headers/chat-header/chat-header.component';
-import { UsersHeaderComponent } from './headers/users-header/users-header.component';
+import { MessageListComponent } from './components/message-list/message-list.component';
+import { ChatFooterComponent } from './components/footer/chat-footer.component';
+import { ChatHeaderComponent } from './components/headers/chat-header/chat-header.component';
+import { UsersHeaderComponent } from './components/headers/users-header/users-header.component';
 import { SearchPipe } from './pipes/search.pipe';
 import { BsDatepickerModule, DatepickerModule } from 'ngx-bootstrap';
 import { LoaderService } from './services/loader.service';
 import { LoaderInterceptor } from './interceptors/loader-interceptor.service';
-import { MyLoaderComponent } from './loader/my-loader/my-loader.component';
+import { MyLoaderComponent } from './components/loader/my-loader.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { RegisterComponent } from './components/register/register.component';
+import { UserMenuBarComponent } from './components/user-menu-bar/user-menu-bar.component';
 
 
 
@@ -42,7 +45,10 @@ export function tokenGetter() {
     ChatHeaderComponent,
     UsersHeaderComponent,
     SearchPipe,
-    MyLoaderComponent
+    MyLoaderComponent,
+    LandingPageComponent,
+    RegisterComponent,
+    UserMenuBarComponent
   ],
   imports: [
     BrowserModule,
