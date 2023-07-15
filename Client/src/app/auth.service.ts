@@ -11,7 +11,7 @@ export class AuthService {
 
 
   testApi(testParam: string): Observable<boolean> {
-    return this.http.get('/api/posts')
+    return this.http.get('/api/posts', {responseType: 'text'})
       .pipe(
         map(result => {
          console.log('Postsssssss : : ',result)
