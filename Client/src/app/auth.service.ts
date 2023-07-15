@@ -14,7 +14,7 @@ export class AuthService {
     return this.http.get('/api/posts')
       .pipe(
         map(result => {
-         console.log('Posts : : ',result)
+         console.log('Postsssssss : : ',result)
           return true;
         })
       );
