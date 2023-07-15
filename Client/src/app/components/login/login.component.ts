@@ -23,6 +23,12 @@ export class LoginComponent {
   }
 
   ngOnInit() {
+    this.authService.testApi('kuchBhi')
+    .pipe(first())
+    .subscribe(
+      result =>  console.log('Res :::',result),
+      err => this.error = 'Login failed'
+    ) 
     this.createLoginForm()
   }
 

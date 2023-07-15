@@ -5,12 +5,23 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
-  
-  userName:string
+
+  userName: string
   constructor(private http: HttpClient) { }
 
+
+  testApi(testParam: string): Observable<boolean> {
+    return this.http.get<{ token: string }>('/api/posts')
+      .pipe(
+        map(result => {
+         console.log('Posts : : ',result)
+          return true;
+        })
+      );
+  }
+
   login(email: string, password: string): Observable<boolean> {
-    return this.http.post<{token: string}>('/api/auth', {email: email, password: password})
+    return this.http.post<{ token: string }>('/api/auth', { email: email, password: password })
       .pipe(
         map(result => {
           localStorage.setItem('access_token', result.token);
