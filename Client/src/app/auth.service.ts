@@ -10,10 +10,10 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   testFunctions(testParam: string): Observable<boolean> {
-    return this.http.get('/api/posts', {responseType: 'text'})
+    return this.http.get('/api/post', {responseType: 'text'})
       .pipe(
         map(result => {
-         console.log('Indexxxxx : : ',result)
+         console.log('Indexxxyxx : : ',result)
           return true;
         })
       );
