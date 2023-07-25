@@ -19,8 +19,7 @@ router.post('/api/auth', async (req, res) => {
 
     if (!user || body.password !== user.password)
       return res.sendStatus(401);
-      
-    
+
     //jwt.sign(payload, secretOrPrivateKey, [options, callback])
     var token = jwt.sign({ userId: user.id, name:user.name, email:user.email, createdAt:'Now' }, process.env.SECRET, { expiresIn: '2h' });
     res.send({ token });
