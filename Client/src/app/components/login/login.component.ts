@@ -19,14 +19,12 @@ export class LoginComponent {
 
   constructor(public authService: AuthService, private wsService: WebsocketService,
     private fb: FormBuilder) {
-
   }
 
   ngOnInit() {
+    this.testCloudflareFunctions('test')
     this.createLoginForm()
   }
-
-  
 
   createLoginForm() {
     this.loginForm = this.fb.group({
@@ -39,15 +37,22 @@ export class LoginComponent {
 
   get l() { return this.loginForm.controls; }
 
-  
-
   loginFormSubmit(value: any) {
     this.onLogin(value)
   }
 
   onLogin(postValue: any) {
-  //  document.documentElement.style.setProperty(`--theme-background-color`, '#075643');
     this.login(postValue)
+  }
+
+  public testCloudflareFunctions(someString:any) {
+    // @ts-ignore
+    this.authService.testFunctions(someString)
+    .pipe(first())
+    .subscribe(
+      result =>  console.log('result from CF function index : ', result),
+      err => console.log('Error while calling CF function index: ',err)
+    ) 
   }
 
   public login(postValue:any) {

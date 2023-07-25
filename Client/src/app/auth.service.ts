@@ -9,6 +9,16 @@ export class AuthService {
   userName:string
   constructor(private http: HttpClient) { }
 
+  testFunctions(testParam: string): Observable<boolean> {
+    return this.http.get('/api/posts')
+      .pipe(
+        map(result => {
+         console.log('Indexxxxx : : ',result)
+          return true;
+        })
+      );
+  }
+
   login(email: string, password: string): Observable<boolean> {
     return this.http.post<{token: string}>('/api/auth', {email: email, password: password})
       .pipe(
