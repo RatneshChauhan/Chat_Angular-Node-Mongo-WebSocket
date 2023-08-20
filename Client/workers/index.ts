@@ -4,7 +4,6 @@ addEventListener('fetch', (event: FetchEvent) => {
 
 //import * as Realm from 'realm-web';
 import * as utils from './utils';
-const User = require('../../../Server/src/models/user.model');
 import { createMongoDBDataAPI } from 'mongodb-data-api-fetch'
 
 async function handleRequest(request: Request) {
